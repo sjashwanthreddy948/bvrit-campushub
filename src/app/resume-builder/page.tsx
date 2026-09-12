@@ -31,7 +31,6 @@ import { Input } from "@/components/ui/Input";
 import { getApplicationProfile } from "@/lib/profile/actions";
 import { getStudentSkills } from "@/lib/skills/actions";
 import { PillTag } from "@/components/ui/PillTag";
-import { ResumeCareerIllustration } from "@/components/illustrations/CollegiateScenes";
 
 // Resume Data Model strictly optimized for ATS parsers
 interface ResumeData {
@@ -357,125 +356,117 @@ export default function ResumeBuilderPage() {
     <DashboardShell role="student">
       {/* Hide surrounding UI during Print */}
       <div className="print:hidden space-y-6">
-        {/* Collegiate Illustrated Hero Banner */}
-        <Card className="border-[#F0E4E2] dark:border-[#2B2C35] bg-gradient-to-br from-white via-[#FFF7F6] to-[#FBF1EF] dark:from-[#1A1D20] dark:via-[#1E2024] dark:to-[#17181C] shadow-xs overflow-hidden">
-          <div className="p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-3 flex-1 text-center md:text-left">
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                <PillTag variant="amber" size="sm">ATS Resume Studio</PillTag>
-                <PillTag variant="outline" size="sm">100% Parser Compliant</PillTag>
-                <PillTag variant="powder" size="sm">BVRIT Auto-Fill</PillTag>
+        {/* EXECUTIVE RESUME BUILDER HEADER */}
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                  ATS Resume Studio
+                </span>
+                <span className="text-xs text-slate-500 font-semibold">100% Parser Compliant</span>
               </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A1D20] dark:text-slate-100 tracking-tight">
-                  ATS-Friendly Resume Maker
-                </h1>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
-                  Build clean, single-column resumes strictly structured to pass Applicant Tracking Systems (ATS) used by top tech companies, Fortune 500 recruiters, and campus drives.
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={handleAutoFill}
-                  disabled={loadingProfile}
-                  leftIcon={<RefreshCw className={`h-4 w-4 ${loadingProfile ? "animate-spin" : ""}`} />}
-                  className="min-h-[44px] border-[#F0E4E2] hover:border-[#F59E0B]"
-                >
-                  Auto-fill from Profile
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCopyPlainText}
-                  leftIcon={copiedText ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
-                  className="min-h-[44px] border-[#F0E4E2]"
-                >
-                  {copiedText ? "Copied Plain Text!" : "Copy Plain Text"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="amber"
-                  size="sm"
-                  onClick={handlePrint}
-                  leftIcon={<Printer className="h-4 w-4" />}
-                  className="min-h-[44px] shadow-sm font-semibold"
-                >
-                  Print / Save as PDF
-                </Button>
-              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+                ATS-Friendly Resume Maker
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+                Build clean, single-column resumes strictly structured to pass Applicant Tracking Systems (ATS) used by top tech companies and campus recruiters.
+              </p>
             </div>
 
-            <div className="shrink-0 hidden sm:flex justify-center items-center">
-              <ResumeCareerIllustration className="w-56 h-auto drop-shadow-xs" />
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleAutoFill}
+                disabled={loadingProfile}
+                leftIcon={<RefreshCw className={`h-4 w-4 ${loadingProfile ? "animate-spin" : ""}`} />}
+                className="font-semibold text-xs border-slate-300 dark:border-slate-700"
+              >
+                Auto-fill from Profile
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleCopyPlainText}
+                leftIcon={copiedText ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+                className="font-semibold text-xs border-slate-300 dark:border-slate-700"
+              >
+                {copiedText ? "Copied!" : "Copy Plain Text"}
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                onClick={handlePrint}
+                leftIcon={<Printer className="h-4 w-4" />}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-2xs"
+              >
+                Print / PDF
+              </Button>
             </div>
           </div>
-        </Card>
+        </div>
 
         {/* ATS Readiness Gauge */}
-        <Card className="border-[#F0E4E2] dark:border-[#2B2C35] bg-white dark:bg-[#1A1D20] shadow-xs">
-          <CardContent className="p-4 sm:p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-[#F59E0B]" />
-                  <h2 className="text-base sm:text-lg font-bold text-[#1A1D20] dark:text-slate-100">
-                    ATS Readiness &amp; Optimization Score: {atsScore}%
-                  </h2>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
-                  Single-column semantic format optimized for Workday, Taleo, Greenhouse, and Lever recruiters.
-                </p>
-              </div>
-
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-slate-500">Template:</span>
-                <div className="flex items-center rounded-full border border-[#F0E4E2] dark:border-[#2B2C35] bg-[#FFF7F6] dark:bg-[#131418] p-1">
-                  {(["classic", "modern", "compact"] as TemplateType[]).map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => setTemplate(t)}
-                      className={`text-xs px-3 py-1 rounded-full font-semibold capitalize transition-colors ${
-                        template === t
-                          ? "bg-[#F59E0B] text-white shadow-xs"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
+                <Sparkles className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
+                  ATS Readiness Score: {atsScore}%
+                </h2>
               </div>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                Single-column semantic format optimized for Workday, Taleo, Greenhouse, and Lever recruiters.
+              </p>
             </div>
 
-            {/* Checklist items */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 pt-1">
-              {atsChecklist.slice(0, 4).map((item) => (
-                <div
-                  key={item.label}
-                  className={`p-2.5 rounded-lg border text-xs flex items-center gap-2 ${
-                    item.passed
-                      ? "bg-emerald-50/60 border-emerald-200 dark:bg-emerald-950/30 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300"
-                      : "bg-amber-50/60 border-amber-200 dark:bg-amber-950/30 dark:border-amber-900 text-amber-800 dark:text-amber-300"
-                  }`}
-                >
-                  {item.passed ? (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 text-amber-600 shrink-0" />
-                  )}
-                  <span className="truncate font-medium">{item.label}</span>
-                </div>
-              ))}
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500">Template:</span>
+              <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 p-1">
+                {(["classic", "modern", "compact"] as TemplateType[]).map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setTemplate(t)}
+                    className={`text-xs px-3 py-1 rounded-md font-semibold capitalize transition-colors ${
+                      template === t
+                        ? "bg-blue-600 text-white shadow-2xs font-bold"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* Checklist items */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 pt-1 border-t border-slate-100 dark:border-slate-800">
+            {atsChecklist.slice(0, 4).map((item) => (
+              <div
+                key={item.label}
+                className={`p-2.5 rounded-lg border text-xs flex items-center gap-2 ${
+                  item.passed
+                    ? "bg-emerald-50/60 border-emerald-200 dark:bg-emerald-950/30 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300"
+                    : "bg-amber-50/60 border-amber-200 dark:bg-amber-950/30 dark:border-amber-900 text-amber-800 dark:text-amber-300"
+                }`}
+              >
+                {item.passed ? (
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <AlertCircle className="h-4 w-4 text-amber-600 shrink-0" />
+                )}
+                <span className="truncate font-medium">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Main Split Interface: Left = Form Editor, Right = Live ATS Resume Paper */}

@@ -28,14 +28,14 @@ export function PillTag({
 
   const variants = {
     default: active
-      ? "bg-[#F59E0B] text-white border-[#F59E0B] shadow-xs"
-      : "bg-white dark:bg-[#1B1C22] text-[#1A1D20] dark:text-[#F4EBE9] border-[#1A1D20]/20 dark:border-white/15 hover:border-[#F59E0B] hover:text-[#F59E0B] hover:bg-[#FFF7F6] dark:hover:bg-[#24252E]",
+      ? "bg-blue-600 text-white border-blue-600 shadow-2xs font-bold"
+      : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50/50 dark:hover:bg-slate-800",
     amber:
-      "bg-[#FFF0EE] text-[#F59E0B] border-[#F59E0B]/40 hover:bg-[#F59E0B] hover:text-white hover:border-[#F59E0B]",
+      "bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800/60 hover:bg-amber-100",
     powder:
-      "bg-[#EBF7FA] text-[#1A5B69] border-[#BEE3ED] hover:bg-[#BEE3ED] hover:text-[#10434E]",
+      "bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-800/60 hover:bg-blue-100",
     outline:
-      "bg-transparent text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-[#F59E0B] hover:text-[#F59E0B]",
+      "bg-transparent text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-blue-600 hover:text-blue-600",
   };
 
   const sizes = {

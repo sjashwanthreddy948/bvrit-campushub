@@ -25,7 +25,6 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { PillTag } from "@/components/ui/PillTag";
-import { CounselingGuidanceIllustration } from "@/components/illustrations/CollegiateScenes";
 import {
   getStudentCirculars,
   CircularItem,
@@ -132,46 +131,41 @@ export default function CircularsPage() {
 
   return (
     <DashboardShell role="student" userName={studentCohort?.name || "Alex Johnson"}>
-      {/* Collegiate Illustrated Hero Banner */}
-      <Card className="border-[#F0E4E2] dark:border-[#2B2C35] bg-gradient-to-br from-white via-[#FFF7F6] to-[#FBF1EF] dark:from-[#1A1D20] dark:via-[#1E2024] dark:to-[#17181C] shadow-xs overflow-hidden mb-6">
-        <div className="p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-3 flex-1 text-center md:text-left">
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-              <PillTag variant="amber" size="sm">Official Dispatches</PillTag>
-              <PillTag variant="outline" size="sm">Cohort Verified</PillTag>
-              <PillTag variant="powder" size="sm">{circulars.length} Active Notices</PillTag>
+      {/* EXECUTIVE CIRCULAR HEADER */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs space-y-3 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                Official Dispatches
+              </span>
+              <span className="text-xs text-slate-500 font-semibold">{circulars.length} Active Notices</span>
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A1D20] dark:text-[#F4EBE9] tracking-tight">
-                Official Circulars <span className="text-[#F59E0B]">✦</span>
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
-                Verified announcements, examination schedules, and official department circulars tailored to your cohort at BVRIT Narsapur.
-              </p>
-            </div>
-
-            {/* Quick Priority Filter Pills */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
-              {priorityOptions.map((opt) => (
-                <PillTag
-                  key={opt.value}
-                  label={opt.label}
-                  active={selectedPriority === opt.value}
-                  onClick={() => setSelectedPriority(opt.value)}
-                  size="sm"
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="shrink-0 hidden sm:flex justify-center items-center">
-            <CounselingGuidanceIllustration className="w-56 h-auto drop-shadow-xs" />
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+              Institutional Circulars &amp; Notices
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+              Official announcements, examination cell circulars, and departmental orders published for BVRIT students.
+            </p>
           </div>
         </div>
-      </Card>
+
+        {/* Quick Priority Filter Pills */}
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+          {priorityOptions.map((opt) => (
+            <PillTag
+              key={opt.value}
+              label={opt.label}
+              active={selectedPriority === opt.value}
+              onClick={() => setSelectedPriority(opt.value)}
+              size="sm"
+            />
+          ))}
+        </div>
+      </div>
 
       {/* Cohort Targeting Awareness Notice */}
-      <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1A1D20] border border-[#F0E4E2] dark:border-[#2B2C35] text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xs">
+      <div className="p-3.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xs">
         <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
           <Users className="h-4 w-4 text-[#F59E0B] shrink-0" />
           <span>

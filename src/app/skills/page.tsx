@@ -45,7 +45,6 @@ import {
 import { StudentSkill, SkillCategory } from "@/types/database";
 import { getOpportunities } from "@/lib/opportunities/actions";
 import { PillTag } from "@/components/ui/PillTag";
-import { TeamworkLaptopIllustration } from "@/components/illustrations/CollegiateScenes";
 
 // Curated LeetCode Patterns with Difficulty & Practice Links
 interface LeetCodeProblem {
@@ -216,105 +215,94 @@ export default function SkillsPage() {
 
   return (
     <DashboardShell role="student">
-      {/* Collegiate Illustrated Hero Banner */}
-      <Card className="border-[#F0E4E2] dark:border-[#2B2C35] bg-gradient-to-br from-white via-[#FFF7F6] to-[#FBF1EF] dark:from-[#1A1D20] dark:via-[#1E2024] dark:to-[#17181C] shadow-xs overflow-hidden mb-6">
-        <div className="p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-3 flex-1 text-center md:text-left">
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-              <PillTag variant="amber" size="sm">Placement Prep</PillTag>
-              <PillTag variant="outline" size="sm">DSA 75 Patterns</PillTag>
-              <PillTag variant="powder" size="sm">Core CS Review</PillTag>
+      {/* EXECUTIVE SKILLS HEADER */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs space-y-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                Placement Readiness
+              </span>
+              <span className="text-xs text-slate-500 font-semibold">{totalProblems} Curated Patterns</span>
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A1D20] dark:text-slate-100 tracking-tight">
-                Skills &amp; Placement Preparation Hub
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
-                Strengthen your interview readiness with structured DSA roadmaps, core computer science review, and high-impact skills required by top recruiters.
-              </p>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
-              <Link
-                href="/resume-builder"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-[#F59E0B] hover:bg-[#D95550] text-white shadow-xs transition-colors min-h-[44px]"
-              >
-                <FileText className="h-4 w-4" />
-                <span>Create ATS Resume</span>
-              </Link>
-            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+              Skills &amp; Technical Preparation Studio
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+              Targeted DSA problem patterns, core computer science modules (OS, DBMS, CN), and industry skill gap telemetry for top recruitment drives.
+            </p>
           </div>
 
-          <div className="shrink-0 hidden sm:flex justify-center items-center">
-            <TeamworkLaptopIllustration className="w-56 h-auto drop-shadow-xs" />
+          <div className="flex items-center gap-2.5 shrink-0">
+            <Link href="/resume-builder">
+              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-2xs" leftIcon={<FileText className="h-4 w-4" />}>
+                ATS Resume Studio
+              </Button>
+            </Link>
           </div>
         </div>
-      </Card>
 
-      <div className="space-y-6">
         {/* Navigation Tabs */}
-        <div className="border-b border-[#F0E4E2] dark:border-[#2B2C35] overflow-x-auto scrollbar-none">
-          <div className="flex items-center gap-2 min-w-full pb-2">
-            <button
-              type="button"
-              onClick={() => setActiveTab("dsa")}
-              className={`min-h-[44px] px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
-                activeTab === "dsa"
-                  ? "bg-[#F59E0B] text-white border-[#F59E0B] shadow-xs"
-                  : "bg-white dark:bg-[#1A1D20] text-slate-700 dark:text-slate-300 border-[#F0E4E2] dark:border-[#2B2C35] hover:border-[#F59E0B]"
-              }`}
-            >
-              <Code2 className="h-4 w-4" />
-              <span>DSA &amp; LeetCode Roadmap</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${activeTab === "dsa" ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"}`}>
-                {completedCount}/{totalProblems} Solved
-              </span>
-            </button>
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 overflow-x-auto scrollbar-none">
+          <button
+            type="button"
+            onClick={() => setActiveTab("dsa")}
+            className={`min-h-[38px] px-4 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
+              activeTab === "dsa"
+                ? "bg-blue-600 text-white border-blue-600 shadow-2xs font-bold"
+                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600"
+            }`}
+          >
+            <Code2 className="h-4 w-4" />
+            <span>DSA Roadmap</span>
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${activeTab === "dsa" ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"}`}>
+              {completedCount}/{totalProblems}
+            </span>
+          </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab("core")}
-              className={`min-h-[44px] px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
-                activeTab === "core"
-                  ? "bg-[#F59E0B] text-white border-[#F59E0B] shadow-xs"
-                  : "bg-white dark:bg-[#1A1D20] text-slate-700 dark:text-slate-300 border-[#F0E4E2] dark:border-[#2B2C35] hover:border-[#F59E0B]"
-              }`}
-            >
-              <BookOpen className="h-4 w-4" />
-              <span>Core CS &amp; CRT Modules</span>
-            </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("core")}
+            className={`min-h-[38px] px-4 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
+              activeTab === "core"
+                ? "bg-blue-600 text-white border-blue-600 shadow-2xs font-bold"
+                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600"
+            }`}
+          >
+            <BookOpen className="h-4 w-4" />
+            <span>Core CS &amp; CRT</span>
+          </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab("skills")}
-              className={`min-h-[44px] px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
-                activeTab === "skills"
-                  ? "bg-[#F59E0B] text-white border-[#F59E0B] shadow-xs"
-                  : "bg-white dark:bg-[#1A1D20] text-slate-700 dark:text-slate-300 border-[#F0E4E2] dark:border-[#2B2C35] hover:border-[#F59E0B]"
-              }`}
-            >
-              <Sparkles className="h-4 w-4" />
-              <span>My Verified Skills</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${activeTab === "skills" ? "bg-white/20 text-white" : "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300"}`}>
-                {studentSkills.length} Active
-              </span>
-            </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("skills")}
+            className={`min-h-[38px] px-4 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
+              activeTab === "skills"
+                ? "bg-blue-600 text-white border-blue-600 shadow-2xs font-bold"
+                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600"
+            }`}
+          >
+            <Sparkles className="h-4 w-4" />
+            <span>Verified Skills</span>
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${activeTab === "skills" ? "bg-white/20 text-white" : "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300"}`}>
+              {studentSkills.length}
+            </span>
+          </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab("gaps")}
-              className={`min-h-[44px] px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
-                activeTab === "gaps"
-                  ? "bg-[#F59E0B] text-white border-[#F59E0B] shadow-xs"
-                  : "bg-white dark:bg-[#1A1D20] text-slate-700 dark:text-slate-300 border-[#F0E4E2] dark:border-[#2B2C35] hover:border-[#F59E0B]"
-              }`}
-            >
-              <TrendingUp className="h-4 w-4" />
-              <span>Market Trends &amp; Gap Analysis</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setActiveTab("gaps")}
+            className={`min-h-[38px] px-4 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
+              activeTab === "gaps"
+                ? "bg-blue-600 text-white border-blue-600 shadow-2xs font-bold"
+                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:text-blue-600"
+            }`}
+          >
+            <TrendingUp className="h-4 w-4" />
+            <span>Market Demand &amp; Gaps</span>
+          </button>
         </div>
+      </div>
 
         {/* ================================================================ */}
         {/* TAB 1: DSA & LEETCODE ROADMAP */}
@@ -833,7 +821,6 @@ export default function SkillsPage() {
             </Card>
           </div>
         )}
-      </div>
 
       {/* Custom Skill Modal */}
       {showCustomModal && (

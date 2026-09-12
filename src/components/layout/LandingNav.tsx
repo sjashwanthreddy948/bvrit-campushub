@@ -10,31 +10,48 @@ export function LandingNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[#F0E4E2] dark:border-[#2B2C35] bg-white/90 dark:bg-[#181A20]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0B0F17]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#F59E0B] flex items-center justify-center text-white shadow-xs">
-            <GraduationCap className="h-5 w-5" />
+        {/* Institutional Brand Logo */}
+        <Link href="/" className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 flex items-center justify-center shrink-0 shadow-2xs">
+            <img
+              src="/images/bvrit-logo.png"
+              alt="BVRIT Logo"
+              className="w-full h-full object-contain"
+            />
           </div>
-          <span className="text-lg font-extrabold tracking-tight text-[#1A1D20] dark:text-[#F4EBE9]">
-            Campus<span className="text-[#F59E0B]">Hub</span>
-          </span>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1.5">
+              <span className="bg-[#E23636] text-white font-black text-xs px-1.5 py-0.5 uppercase tracking-wider rounded-xs">
+                BVRIT
+              </span>
+              <span className="text-base font-black tracking-tight text-slate-900 dark:text-white leading-none">
+                CampusHub
+              </span>
+              <span className="hidden sm:inline-block text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-red-50 text-[#E23636] dark:bg-red-950/60 dark:text-red-300 border border-red-200/60 dark:border-red-800/60">
+                Autonomous
+              </span>
+            </div>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+              Sri Vishnu Educational Society
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Links */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600 dark:text-slate-300">
-          <Link href="#problem" className="hover:text-[#F59E0B] transition-colors">
-            Why CampusHub
+          <Link href="/opportunities" className="hover:text-[#E23636] transition-colors">
+            Placement Drives
           </Link>
-          <Link href="#features" className="hover:text-[#F59E0B] transition-colors">
-            Features
+          <Link href="/coordinator/dashboard" className="hover:text-[#E23636] transition-colors">
+            TPO Console
           </Link>
-          <Link href="#how-it-works" className="hover:text-[#F59E0B] transition-colors">
-            How It Works
+          <Link href="/ai" className="hover:text-[#E23636] transition-colors">
+            Campus AI
           </Link>
-          <Link href="#benefits" className="hover:text-[#F59E0B] transition-colors">
-            For students
+          <Link href="/circulars" className="hover:text-[#E23636] transition-colors">
+            Circulars &amp; Notices
           </Link>
         </nav>
 
@@ -42,13 +59,13 @@ export function LandingNav() {
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
           <Link href="/login">
-            <Button variant="ghost" size="sm">
-              Sign In
+            <Button variant="outline" size="sm" className="font-semibold border-slate-300 dark:border-slate-700">
+              Institutional Sign In
             </Button>
           </Link>
-          <Link href="/register">
-            <Button variant="amber" size="sm" rightIcon={<ArrowRight className="h-4 w-4" />}>
-              Get Started
+          <Link href="/login">
+            <Button size="sm" className="bg-[#E23636] hover:bg-[#c52d2d] text-white font-bold shadow-2xs">
+              Student Portal &rarr;
             </Button>
           </Link>
         </div>
@@ -59,7 +76,7 @@ export function LandingNav() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#FFF0EE] dark:hover:bg-[#24252E] focus:outline-none"
+            className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -69,46 +86,46 @@ export function LandingNav() {
 
       {/* Mobile menu dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#F0E4E2] dark:border-[#2B2C35] bg-white dark:bg-[#181A20] px-4 pt-3 pb-5 space-y-3">
+        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-3">
           <nav className="flex flex-col space-y-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
             <Link
-              href="#problem"
+              href="/opportunities"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-xl hover:bg-[#FFF0EE] hover:text-[#F59E0B] transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors"
             >
-              Why CampusHub
+              Placement Drives
             </Link>
             <Link
-              href="#features"
+              href="/coordinator/dashboard"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-xl hover:bg-[#FFF0EE] hover:text-[#F59E0B] transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors"
             >
-              Features
+              TPO Console
             </Link>
             <Link
-              href="#how-it-works"
+              href="/ai"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-xl hover:bg-[#FFF0EE] hover:text-[#F59E0B] transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors"
             >
-              How It Works
+              Campus AI
             </Link>
             <Link
-              href="#benefits"
+              href="/circulars"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-xl hover:bg-[#FFF0EE] hover:text-[#F59E0B] transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors"
             >
-              For students
+              Circulars &amp; Notices
             </Link>
           </nav>
-          <div className="pt-2 border-t border-[#F0E4E2] dark:border-[#2B2C35] flex flex-col gap-2">
+          <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2">
             <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
               <Button variant="outline" size="md" fullWidth>
-                Sign In
+                Institutional Sign In
               </Button>
             </Link>
-            <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
-              <Button variant="amber" size="md" fullWidth rightIcon={<ArrowRight className="h-4 w-4" />}>
-                Get Started
+            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
+              <Button size="md" fullWidth className="bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                Student Portal &rarr;
               </Button>
             </Link>
           </div>

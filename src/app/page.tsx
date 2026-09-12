@@ -1,7 +1,11 @@
+"use client";
+
+import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
+  ArrowLeft,
   Briefcase,
   Sparkles,
   Calendar,
@@ -15,6 +19,7 @@ import {
   Search,
   Users,
   Award,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
@@ -22,14 +27,108 @@ import { Badge } from "@/components/ui/Badge";
 import { LandingNav } from "@/components/layout/LandingNav";
 import { Footer } from "@/components/layout/Footer";
 
+interface HeroSlide {
+  id: number;
+  breadcrumb: string;
+  highlightCategory: string;
+  title: string;
+  highlightWord: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+  stat1Value: string;
+  stat1Label: string;
+  stat2Value: string;
+  stat2Label: string;
+  badgeText: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+const HERO_SLIDES: HeroSlide[] = [
+  {
+    id: 0,
+    breadcrumb: "Home/",
+    highlightCategory: "CAMPUS PLACEMENT",
+    title: "TECH ACHIEVERS",
+    highlightWord: "ACHIEVERS",
+    description:
+      "B.V. Raju Institute of Technology engineering graduates leading top multinational tech teams. With a highest package of ₹44.00 LPA and 1,540+ campus offers, BVRIT equips students with the algorithmic mastery and industry readiness required by tier-1 global recruiters.",
+    imageSrc: "/images/hero_student.jpg",
+    imageAlt: "BVRIT Tech Achiever holding laptop displaying code",
+    stat1Value: "₹44.0 LPA",
+    stat1Label: "Highest CTC Package",
+    stat2Value: "1,540+",
+    stat2Label: "Campus Offers Confirmed",
+    badgeText: "Placement Season 2025–26",
+    ctaText: "Explore 80+ Placement Drives",
+    ctaLink: "/opportunities",
+  },
+  {
+    id: 1,
+    breadcrumb: "Home/",
+    highlightCategory: "AI CAREER ACCELERATOR",
+    title: "INNOVATION LEADERS",
+    highlightWord: "LEADERS",
+    description:
+      "Empowered by Vedic.ai, single-column ATS resume verification, and automated placement eligibility algorithms. Over 120+ top engineering employers recruit annually from BVRIT's 27 academic cohorts with real-time match intelligence.",
+    imageSrc: "/images/hero_student_2.jpg",
+    imageAlt: "BVRIT Innovation Leader with analytics ultrabook",
+    stat1Value: "120+",
+    stat1Label: "Recruiting Partners",
+    stat2Value: "100%",
+    stat2Label: "ATS Parser Compliant",
+    badgeText: "Vedic.ai & Career Studio",
+    ctaText: "Launch CampusHub AI",
+    ctaLink: "/ai",
+  },
+  {
+    id: 2,
+    breadcrumb: "Home/",
+    highlightCategory: "ACADEMIC EXCELLENCE",
+    title: "SUPER 27 COHORTS",
+    highlightWord: "COHORTS",
+    description:
+      "JNTU Hyderabad autonomous syllabus with NAAC 'A+' grade accreditation. Real-time section monitoring across CSE, CSM, CSD, AIDS, IT, ECE, and core engineering sections with instant WhatsApp circular and assignment broadcasts.",
+    imageSrc: "/images/hero_student.jpg",
+    imageAlt: "BVRIT Academic Excellence Student",
+    stat1Value: "27 Sections",
+    stat1Label: "Cohort CR Telemetry",
+    stat2Value: "NAAC 'A+'",
+    stat2Label: "Autonomous JNTUH",
+    badgeText: "Sri Vishnu Educational Society",
+    ctaText: "Open TPO Console",
+    ctaLink: "/coordinator/dashboard",
+  },
+];
+
 export default function LandingPage() {
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
+
+  const slide = HERO_SLIDES[currentSlide];
+
+  const handleNext = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    setTimeout(() => setIsTransitioning(false), 250);
+  };
+
+  const handlePrev = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+    setTimeout(() => setIsTransitioning(false), 250);
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-white">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 overflow-x-hidden selection:bg-[#E23636] selection:text-white">
       <LandingNav />
 
       {/* ── Institutional Accreditation Notice Bar ────────────────────── */}
-      <div className="bg-slate-900 text-white text-xs py-2 px-4 text-center font-medium border-b border-slate-800 flex items-center justify-center gap-2 flex-wrap">
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-500 text-slate-950 font-bold text-[10px] uppercase">
+      <div className="bg-slate-900 text-white text-xs py-2 px-4 text-center font-medium border-b border-slate-800 flex items-center justify-center gap-2 flex-wrap z-20">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#E23636] text-white font-bold text-[10px] uppercase">
           Placement Season 2025–2026
         </span>
         <span>B.V. Raju Institute of Technology • Autonomous • NAAC &apos;A+&apos; Grade • JNTU Hyderabad</span>
@@ -37,181 +136,322 @@ export default function LandingPage() {
         <span className="text-amber-400 font-semibold hidden md:inline">1,540+ Campus Offers Confirmed</span>
       </div>
 
-      {/* ── 1. HERO SECTION ────────────────────────────────────────────── */}
-      <section className="relative pt-8 sm:pt-14 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          
-          {/* Left Column: Clear Academic Value & Actions */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-xs font-semibold text-amber-800 dark:text-amber-300">
-              <Sparkles className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
-              <span>Official Centralized Career &amp; Academic Hub</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-slate-50 leading-[1.15]">
-              BVRIT Campus Placement &amp; Academic <span className="text-amber-600 dark:text-amber-400">Coordination Portal</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
-              One unified platform for BVRITians. Track real-time placement drives across all 27 academic sections, calculate exact AI eligibility match scores, prepare ATS resumes, and access official department circulars.
-            </p>
-
-            {/* Quick Search Bar */}
-            <div className="bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center gap-2 max-w-xl">
-              <div className="flex items-center gap-2.5 px-3 flex-1">
-                <Search className="h-5 w-5 text-slate-400 shrink-0" />
-                <input
-                  type="text"
-                  placeholder="Search 80+ active drives (Microsoft, Amazon, Qualcomm)..."
-                  className="w-full text-sm bg-transparent text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none"
-                  readOnly
-                />
-              </div>
-              <Link href="/opportunities">
-                <Button variant="primary" size="md" className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 shrink-0 w-full sm:w-auto">
-                  Search Drives
-                </Button>
-              </Link>
-            </div>
-
-            {/* Direct Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <Link href="/login">
-                <Button size="lg" className="bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 shadow-sm">
-                  Student Portal Login &rarr;
-                </Button>
-              </Link>
-              <Link href="/coordinator/dashboard">
-                <Button variant="outline" size="lg" className="border-slate-300 dark:border-slate-700 font-semibold">
-                  TPO Officer Console
-                </Button>
-              </Link>
-              <Link href="/ai">
-                <Button variant="ghost" size="lg" className="text-amber-700 dark:text-amber-400 font-semibold gap-1.5">
-                  <Sparkles className="h-4 w-4" /> Ask CampusHub AI
-                </Button>
-              </Link>
-            </div>
-
-            {/* Institutional Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-400">
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-emerald-600" /> BVRIT Single Sign-On
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Users className="h-4 w-4 text-blue-600" /> 27 Cohort Sections Tracked
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Award className="h-4 w-4 text-amber-600" /> Verified JNTUH Syllabus &amp; Placement Criteria
-              </span>
-            </div>
-          </div>
-
-          {/* Right Column: Featured Live Placement Drive Card */}
-          <div className="lg:col-span-5">
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-amber-500/40 p-6 sm:p-7 shadow-lg space-y-5 relative">
-              <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Today&apos;s Featured Campus Drive
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold text-xs">
-                  Registration Open
-                </span>
-              </div>
-
-              {/* Company & Role */}
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-xl bg-slate-900 text-white font-black text-xl flex items-center justify-center shrink-0 shadow-sm border border-slate-800">
-                  MS
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                    Microsoft India
-                  </h3>
-                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                    Software Development Engineer (SDE-1)
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Hyderabad &bull; Full-Time Campus Hire
-                  </p>
-                </div>
-              </div>
-
-              {/* Package & Eligibility Grid */}
-              <div className="grid grid-cols-2 gap-3 py-3 border-y border-slate-100 dark:border-slate-800">
-                <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl">
-                  <span className="text-slate-500 dark:text-slate-400 block text-xs font-medium">Annual CTC Package</span>
-                  <span className="text-lg font-black text-slate-900 dark:text-slate-100">₹44.00 LPA</span>
-                </div>
-                <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl">
-                  <span className="text-slate-500 dark:text-slate-400 block text-xs font-medium">Cutoff CGPA</span>
-                  <span className="text-lg font-black text-slate-900 dark:text-slate-100">7.50+ / 10.0</span>
-                </div>
-              </div>
-
-              {/* Schedule & Hall Info */}
-              <div className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-amber-500 shrink-0" />
-                  <span>Online Assessment: <strong>Today at 10:00 AM &bull; Kalam Block Lab 304</strong></span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Building className="h-4 w-4 text-slate-400 shrink-0" />
-                  <span>Target Branches: <strong>CSE, CSM, CSD, AIDS, IT, ECE</strong></span>
-                </div>
-              </div>
-
-              {/* Action Button */}
-              <Link href="/login" className="block w-full">
-                <Button size="md" className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold shadow-xs">
-                  Login &amp; Check Eligibility Match &rarr;
-                </Button>
-              </Link>
-            </div>
-          </div>
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* ── 1. MARVEL-STYLE EDITORIAL HERO SHOWCASE ───────────────────────── */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      <section className="relative min-h-[580px] lg:min-h-[700px] w-full flex items-center overflow-hidden bg-white dark:bg-[#0B0F17] border-b border-slate-100 dark:border-slate-800/80">
+        
+        {/* ── GIANT BACKGROUND TYPOGRAPHY WATERMARK ("BVRIT") ────────────── */}
+        <div
+          aria-hidden="true"
+          className="absolute -top-4 lg:top-6 left-4 lg:left-8 select-none pointer-events-none font-black text-[120px] sm:text-[200px] lg:text-[260px] leading-none tracking-tighter text-slate-900/[0.04] dark:text-white/[0.04] z-0 uppercase font-sans"
+        >
+          BVRIT
         </div>
 
-        {/* ── 4 Flagship Academic & Placement Metrics ─────────────────────── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs text-center space-y-1">
-            <div className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">₹44.0 LPA</div>
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Highest CTC Package</div>
-            <div className="text-xs text-slate-500">Tier-1 Global Tech Offers</div>
-          </div>
+        {/* ── DYNAMIC ANGLED DIAGONAL SLASH (Right Side Polygon) ─────────── */}
+        <div
+          className="hidden lg:block absolute top-0 right-0 h-full w-[55%] z-0"
+          style={{
+            clipPath: "polygon(28% 0, 100% 0, 100% 100%, 0% 100%)",
+            background: "linear-gradient(135deg, #E23636 0%, #B91C1C 60%, #991B1B 100%)",
+          }}
+        >
+          {/* Subtle geometric dot grid inside diagonal slash */}
+          <div
+            className="w-full h-full opacity-15"
+            style={{
+              backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px)`,
+              backgroundSize: "28px 28px",
+            }}
+          />
+        </div>
 
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs text-center space-y-1">
-            <div className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">1,540+</div>
-            <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Total Campus Offers</div>
-            <div className="text-xs text-slate-500">2025–26 Graduating Batch</div>
-          </div>
+        {/* Secondary diagonal accent border */}
+        <div
+          className="hidden lg:block absolute top-0 right-[41.5%] h-full w-[2px] z-0 bg-white/20 pointer-events-none"
+          style={{
+            transform: "skewX(-16deg)",
+          }}
+        />
 
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs text-center space-y-1">
-            <div className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">120+</div>
-            <div className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Recruiting Partners</div>
-            <div className="text-xs text-slate-500">Amazon, Microsoft, TCS, Qualcomm</div>
-          </div>
+        {/* ── RIGHTMOST VERTICAL DASH PAGINATION INDICATOR ───────────────── */}
+        <div className="absolute right-4 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3">
+          {HERO_SLIDES.map((s, idx) => (
+            <button
+              key={s.id}
+              onClick={() => setCurrentSlide(idx)}
+              className="group py-1.5 focus:outline-none cursor-pointer"
+              aria-label={`Jump to slide ${idx + 1}`}
+            >
+              <div
+                className={`transition-all duration-300 rounded-full ${
+                  currentSlide === idx
+                    ? "w-8 h-1.5 bg-white lg:bg-white shadow-md"
+                    : "w-4 h-1 bg-slate-300 dark:bg-slate-700 lg:bg-white/40 hover:w-6 hover:bg-white/80"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
 
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs text-center space-y-1">
-            <div className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">27</div>
-            <div className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">Academic Sections</div>
-            <div className="text-xs text-slate-500">Real-Time Turnout Tracking</div>
+        {/* ── MAIN CONTENT CONTAINER ─────────────────────────────────────── */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10 sm:py-16 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
+            
+            {/* ── LEFT COLUMN: EDITORIAL NARRATIVE & CONTROLS ─────────────── */}
+            <div className="lg:col-span-6 space-y-6 sm:space-y-7 pr-0 lg:pr-6">
+              
+              {/* Top Red Brand Stamp (Echoing the Iconic Marvel Red Box) */}
+              <div className="flex items-center gap-3">
+                <div className="bg-[#E23636] text-white font-black tracking-tight text-xl sm:text-2xl px-3.5 py-1 uppercase shadow-md inline-block rounded-xs">
+                  BVRIT
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                    Sri Vishnu Educational Society
+                  </span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                    Autonomous &bull; NAAC &apos;A+&apos; Grade
+                  </span>
+                </div>
+              </div>
+
+              {/* Breadcrumb & Giant Red Hero Headline */}
+              <div className="space-y-2">
+                <div className="text-xs sm:text-sm font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase">
+                  <span>{slide.breadcrumb}</span>
+                  <span className="text-slate-900 dark:text-slate-100 font-black ml-0.5">
+                    {slide.highlightCategory}
+                  </span>
+                </div>
+
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#E23636] uppercase leading-[0.95] drop-shadow-xs transition-opacity duration-300">
+                  {slide.title}
+                </h1>
+              </div>
+
+              {/* Editorial Paragraph */}
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-lg transition-opacity duration-300">
+                {slide.description}
+              </p>
+
+              {/* Quick Stat Highlights */}
+              <div className="grid grid-cols-2 gap-3 max-w-md pt-1">
+                <div className="bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3 rounded-xl">
+                  <span className="text-slate-500 dark:text-slate-400 block text-[11px] font-medium">
+                    {slide.stat1Label}
+                  </span>
+                  <span className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100">
+                    {slide.stat1Value}
+                  </span>
+                </div>
+                <div className="bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3 rounded-xl">
+                  <span className="text-slate-500 dark:text-slate-400 block text-[11px] font-medium">
+                    {slide.stat2Label}
+                  </span>
+                  <span className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100">
+                    {slide.stat2Value}
+                  </span>
+                </div>
+              </div>
+
+              {/* Primary Call-to-Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <Link href={slide.ctaLink}>
+                  <Button size="lg" className="bg-[#E23636] hover:bg-[#c52d2d] text-white font-bold px-7 shadow-md">
+                    {slide.ctaText} &rarr;
+                  </Button>
+                </Link>
+                <Link href="/login">
+                  <Button variant="outline" size="lg" className="border-slate-300 dark:border-slate-700 font-semibold">
+                    Student Login
+                  </Button>
+                </Link>
+              </div>
+
+              {/* ── BOTTOM ROW: SOCIAL ICONS & ANGLED PARALLELOGRAM CONTROLS ── */}
+              <div className="flex items-center justify-between pt-5 border-t border-slate-100 dark:border-slate-800/80 max-w-lg">
+                
+                {/* Minimalist Social / Official Links (as seen in Marvel reference) */}
+                <div className="flex items-center gap-4 text-slate-700 dark:text-slate-300 text-xs font-bold">
+                  <a
+                    href="https://bvrit.ac.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#E23636] transition-colors"
+                    title="Official BVRIT Website"
+                  >
+                    BVRIT.AC.IN
+                  </a>
+                  <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+                  <Link href="/coordinator/dashboard" className="hover:text-[#E23636] transition-colors">
+                    TPO DESK
+                  </Link>
+                  <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+                  <Link href="/ai" className="hover:text-[#E23636] transition-colors">
+                    AI CHAT
+                  </Link>
+                </div>
+
+                {/* ── ANGLED PARALLELOGRAM CONTROLS [ ← ] [ → ] ────────────── */}
+                <div className="flex items-center gap-2">
+                  {/* Left Button (Dark Skewed Parallelogram) */}
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    aria-label="Previous story"
+                    className="h-11 w-14 bg-slate-900 dark:bg-black text-white hover:bg-slate-800 transition-all flex items-center justify-center -skew-x-12 shadow-sm cursor-pointer active:scale-95"
+                  >
+                    <ArrowLeft className="h-5 w-5 skew-x-12" />
+                  </button>
+
+                  {/* Right Button (White/Red Skewed Parallelogram) */}
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    aria-label="Next story"
+                    className="h-11 w-14 bg-white text-slate-900 border-2 border-slate-900 hover:bg-[#E23636] hover:text-white hover:border-[#E23636] transition-all flex items-center justify-center -skew-x-12 shadow-sm cursor-pointer active:scale-95"
+                  >
+                    <ArrowRight className="h-5 w-5 skew-x-12" />
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* ── RIGHT COLUMN: DYNAMIC HERO CENTERPIECE ─────────────────── */}
+            <div className="lg:col-span-6 relative flex items-center justify-center lg:justify-end">
+              
+              {/* Background Glow Circle behind Achiever */}
+              <div className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-red-500/20 blur-3xl pointer-events-none" />
+
+              {/* Dynamic Centerpiece Frame breaking through diagonal */}
+              <div className="relative z-10 w-full max-w-[440px] sm:max-w-[480px] lg:max-w-[500px]">
+                
+                {/* Hero Student Image */}
+                <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 bg-slate-900 group">
+                  <Image
+                    src={slide.imageSrc}
+                    alt={slide.imageAlt}
+                    fill
+                    priority
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  {/* Dramatic Gradient Overlay at base */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
+
+                  {/* Floating Live Badge inside image */}
+                  <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white text-xs font-bold">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>{slide.badgeText}</span>
+                  </div>
+
+                  {/* Floating Bottom Card inside image */}
+                  <div className="absolute bottom-4 left-4 right-4 z-10 p-4 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 shadow-lg flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#E23636] text-white flex items-center justify-center font-black text-sm shrink-0">
+                        BV
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 dark:text-slate-100">
+                          BVRIT Placement Intelligence
+                        </div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                          Autonomous &bull; 27 Engineering Cohorts
+                        </div>
+                      </div>
+                    </div>
+                    <Link href="/opportunities">
+                      <span className="text-xs font-black text-[#E23636] hover:underline flex items-center gap-0.5">
+                        <span>View</span>
+                        <ChevronRight className="h-3.5 w-3.5" />
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Floating External Metric Chip (Top Right) */}
+                <div className="absolute -top-3 -right-3 sm:-right-5 z-20 bg-white dark:bg-slate-900 p-3 rounded-2xl border-2 border-[#E23636] shadow-xl text-center hidden sm:block">
+                  <div className="text-base font-black text-[#E23636]">₹44.0 LPA</div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                    Highest CTC
+                  </div>
+                </div>
+
+                {/* Floating External Metric Chip (Bottom Left) */}
+                <div className="absolute -bottom-3 -left-3 sm:-left-5 z-20 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl hidden sm:flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold">
+                    <CheckCircle2 className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-slate-900 dark:text-slate-100">1,540+ Offers</div>
+                    <div className="text-[10px] text-slate-500">2025–26 Batch</div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* ── 2. ACTIVE PLACEMENT DRIVES DIRECTORY ────────────────────────── */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8">
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* ── 2. QUICK SEARCH BAR & STATS SUMMARY ───────────────────────────── */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div className="bg-slate-50 dark:bg-slate-900/60 p-4 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <div className="w-10 h-10 rounded-2xl bg-[#E23636]/10 text-[#E23636] flex items-center justify-center shrink-0">
+              <Search className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                Direct Drive &amp; Circular Lookup
+              </h3>
+              <p className="text-xs text-slate-500">
+                Search Microsoft, Amazon, Qualcomm, TCS Digital, and all 80+ active drives.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <Link href="/opportunities" className="w-full sm:w-auto">
+              <Button size="md" className="bg-slate-900 hover:bg-slate-800 text-white font-bold w-full sm:w-auto shadow-xs">
+                Browse All Drives &rarr;
+              </Button>
+            </Link>
+            <Link href="/ai" className="w-full sm:w-auto">
+              <Button variant="outline" size="md" className="border-slate-300 dark:border-slate-700 font-semibold w-full sm:w-auto">
+                <Sparkles className="h-4 w-4 text-[#E23636] mr-1.5" />
+                Ask AI Mentor
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* ── 3. ACTIVE PLACEMENT DRIVES DIRECTORY ──────────────────────────── */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#E23636]">
               Active Hiring Season
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 mt-1">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 mt-1">
               Featured Campus Placement Drives
             </h2>
           </div>
-          <Link href="/opportunities" className="text-sm font-bold text-slate-900 dark:text-slate-100 hover:text-amber-600 flex items-center gap-1">
+          <Link
+            href="/opportunities"
+            className="text-sm font-bold text-[#E23636] hover:underline flex items-center gap-1"
+          >
             <span>View All 80+ Drives</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -219,7 +459,7 @@ export default function LandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Drive 1: Amazon */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded">
@@ -231,11 +471,11 @@ export default function LandingPage() {
                 <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Amazon Web Services</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">SDE Cloud &amp; DevOps Intern</p>
               </div>
-              <div className="text-sm font-black text-amber-600 dark:text-amber-400">
+              <div className="text-sm font-black text-[#E23636]">
                 ₹28.00 LPA CTC
               </div>
               <div className="text-xs text-slate-500">
-                Eligible: B.Tech CSE, IT, ECE (CGPA ≥ 7.5)
+                Eligible: B.Tech CSE, IT, ECE (CGPA &ge; 7.5)
               </div>
             </div>
             <Link href="/login" className="w-full">
@@ -246,10 +486,10 @@ export default function LandingPage() {
           </div>
 
           {/* Drive 2: Microsoft */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border-2 border-amber-500/40 p-5 shadow-xs flex flex-col justify-between space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-[#E23636]/40 p-5 shadow-xs flex flex-col justify-between space-y-4">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#E23636] bg-red-50 dark:bg-red-950/40 px-2 py-0.5 rounded">
                   Active Spotlight
                 </span>
                 <span className="text-xs text-slate-500">Live Today</span>
@@ -258,7 +498,7 @@ export default function LandingPage() {
                 <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Microsoft India</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Software Development Engineer</p>
               </div>
-              <div className="text-sm font-black text-amber-600 dark:text-amber-400">
+              <div className="text-sm font-black text-[#E23636]">
                 ₹44.00 LPA CTC
               </div>
               <div className="text-xs text-slate-500">
@@ -266,14 +506,14 @@ export default function LandingPage() {
               </div>
             </div>
             <Link href="/login" className="w-full">
-              <Button size="sm" fullWidth className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs">
+              <Button size="sm" fullWidth className="bg-[#E23636] hover:bg-[#c52d2d] text-white font-bold text-xs">
                 Apply Now
               </Button>
             </Link>
           </div>
 
           {/* Drive 3: Qualcomm */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2 py-0.5 rounded">
@@ -285,11 +525,11 @@ export default function LandingPage() {
                 <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Qualcomm India</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Embedded Software Engineer</p>
               </div>
-              <div className="text-sm font-black text-amber-600 dark:text-amber-400">
+              <div className="text-sm font-black text-[#E23636]">
                 ₹18.50 LPA CTC
               </div>
               <div className="text-xs text-slate-500">
-                Eligible: ECE, EEE, CSE (CGPA ≥ 7.0)
+                Eligible: ECE, EEE, CSE (CGPA &ge; 7.0)
               </div>
             </div>
             <Link href="/login" className="w-full">
@@ -300,7 +540,7 @@ export default function LandingPage() {
           </div>
 
           {/* Drive 4: Cognizant */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 px-2 py-0.5 rounded">
@@ -312,11 +552,11 @@ export default function LandingPage() {
                 <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Cognizant Technology</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">GenC Next Digital Specialist</p>
               </div>
-              <div className="text-sm font-black text-amber-600 dark:text-amber-400">
+              <div className="text-sm font-black text-[#E23636]">
                 ₹6.75 LPA CTC
               </div>
               <div className="text-xs text-slate-500">
-                Eligible: All 27 B.Tech Sections (CGPA ≥ 6.5)
+                Eligible: All 27 B.Tech Sections (CGPA &ge; 6.5)
               </div>
             </div>
             <Link href="/login" className="w-full">
@@ -328,41 +568,43 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 3. FOUR ROLE-BASED PORTALS (Easy to Understand) ─────────────── */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8 bg-white dark:bg-slate-900/50 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-10">
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* ── 4. FOUR ROLE-BASED PORTALS (Institutional Architecture) ──────── */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8 bg-slate-50 dark:bg-slate-900/40 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-10">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-            Unified Institutional Access
+          <span className="text-xs font-bold uppercase tracking-wider text-[#E23636]">
+            Unified Institutional Ecosystem
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100">
-            Dedicated Portals for the BVRIT Community
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100">
+            Dedicated Consoles for the BVRIT Community
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            Built specifically to solve placement, attendance, assignment, and communication challenges.
+            Designed to address recruitment, coursework, assignments, and placement telemetry.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Portal 1 */}
-          <div className="bg-slate-50 dark:bg-slate-800/60 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/60 space-y-3 flex flex-col justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3 flex flex-col justify-between shadow-xs">
             <div className="space-y-2.5">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/60 text-[#E23636] flex items-center justify-center font-bold">
                 <Briefcase className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Student Career Hub</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Discover matched drives, view eligibility breakdowns, calculate 100% profile match, and build ATS-verified resumes.
+                Discover matched drives, view eligibility breakdowns, calculate profile match, and export ATS-verified resumes.
               </p>
             </div>
-            <Link href="/login" className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1">
+            <Link href="/login" className="text-xs font-bold text-[#E23636] hover:underline inline-flex items-center gap-1">
               <span>Enter as Student</span> &rarr;
             </Link>
           </div>
 
           {/* Portal 2 */}
-          <div className="bg-slate-50 dark:bg-slate-800/60 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/60 space-y-3 flex flex-col justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3 flex flex-col justify-between shadow-xs">
             <div className="space-y-2.5">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center font-bold">
                 <Users className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">TPO Officer Console</h3>
@@ -376,9 +618,9 @@ export default function LandingPage() {
           </div>
 
           {/* Portal 3 */}
-          <div className="bg-slate-50 dark:bg-slate-800/60 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/60 space-y-3 flex flex-col justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3 flex flex-col justify-between shadow-xs">
             <div className="space-y-2.5">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center font-bold">
                 <GraduationCap className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Faculty &amp; Notices</h3>
@@ -392,9 +634,9 @@ export default function LandingPage() {
           </div>
 
           {/* Portal 4 */}
-          <div className="bg-slate-50 dark:bg-slate-800/60 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/60 space-y-3 flex flex-col justify-between">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3 flex flex-col justify-between shadow-xs">
             <div className="space-y-2.5">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center font-bold">
                 <Sparkles className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">CampusHub AI Mentor</h3>
@@ -409,18 +651,21 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 4. FINAL CTA BANNER ─────────────────────────────────────────── */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
+      {/* ── 5. FINAL ACCELERATOR CALL TO ACTION ───────────────────────────── */}
+      {/* ═════════════════════════════════════════════════════════════════════ */}
       <section className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 text-center space-y-5 shadow-lg">
-          <h2 className="text-2xl sm:text-4xl font-black max-w-2xl mx-auto">
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 text-center space-y-5 shadow-xl relative overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#E23636]/20 rounded-full blur-3xl pointer-events-none" />
+          <h2 className="text-2xl sm:text-4xl font-black max-w-2xl mx-auto relative z-10">
             Ready to Accelerate Your Career at BVRIT?
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto relative z-10">
             Join 4,000+ students actively tracking on-campus drives, ATS resume scores, and academic circulars.
           </p>
-          <div className="flex justify-center gap-3 pt-2">
+          <div className="flex justify-center gap-3 pt-2 relative z-10">
             <Link href="/login">
-              <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-8 shadow-sm">
+              <Button size="lg" className="bg-[#E23636] hover:bg-[#c52d2d] text-white font-bold px-8 shadow-md">
                 Login with Roll Number
               </Button>
             </Link>

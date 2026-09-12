@@ -30,33 +30,33 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Touch targets: minimum 44px height on mobile for standard sizes
     const baseStyles =
-      "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F59E0B] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] select-none";
+      "inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] select-none";
 
     const variants = {
       primary:
-        "bg-[#F59E0B] text-[#0F172A] font-extrabold hover:bg-[#D97706] hover:text-white active:bg-[#B45309] shadow-xs",
+        "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 shadow-xs font-semibold",
       "amber-glow":
-        "liquid-btn-amber shadow-md hover:shadow-lg active:scale-[0.97]",
+        "liquid-btn-amber shadow-sm hover:shadow-md active:scale-[0.97]",
       glass:
         "liquid-btn-glass",
       coral:
-        "bg-[#F59E0B] text-[#0F172A] font-extrabold hover:bg-[#D97706] hover:text-white active:bg-[#B45309] shadow-xs",
+        "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 shadow-xs font-semibold",
       amber:
-        "bg-[#F59E0B] text-[#0F172A] font-extrabold hover:bg-[#D97706] hover:text-white active:bg-[#B45309] shadow-xs",
+        "bg-amber-500 text-slate-950 font-bold hover:bg-amber-600 shadow-xs",
       bvrit:
-        "bg-[#0D9488] text-white font-bold hover:bg-[#0F766E] active:bg-[#115E59] shadow-xs",
+        "bg-[#1E40AF] text-white font-bold hover:bg-[#1D4ED8] active:bg-[#1E3A8A] shadow-xs",
       powder:
-        "bg-[#CCFBF1] text-[#0F766E] hover:bg-[#99F6E4] active:bg-[#5EEAD4] shadow-xs",
+        "bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 shadow-xs",
       pill:
-        "rounded-full border border-slate-900/15 dark:border-white/15 bg-white dark:bg-[#111827] text-[#0F172A] dark:text-[#F8FAFC] hover:border-[#F59E0B] hover:text-[#D97706] hover:bg-[#FEF3C7] dark:hover:bg-[#1E293B] shadow-2xs font-bold",
+        "rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:border-blue-600 hover:text-blue-600 shadow-2xs font-semibold",
       blue:
-        "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 shadow-sm",
+        "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 shadow-xs",
       secondary:
-        "bg-[#F1F5F9] dark:bg-[#1E293B] text-[#0F172A] dark:text-[#F8FAFC] hover:bg-[#E2E8F0] dark:hover:bg-[#334155] border border-[#E2E8F0] dark:border-slate-800 font-semibold",
+        "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 font-semibold",
       outline:
-        "border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-[#111827]/80 backdrop-blur-xs text-slate-800 dark:text-slate-200 hover:border-[#F59E0B] hover:text-[#D97706] dark:hover:border-[#FBBF24] dark:hover:text-[#FBBF24] hover:bg-white dark:hover:bg-[#111827]",
+        "border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600 shadow-2xs",
       ghost:
-        "bg-transparent text-slate-700 dark:text-slate-300 hover:bg-[#FEF3C7] dark:hover:bg-[#1E293B] hover:text-[#D97706] dark:hover:text-[#FBBF24]",
+        "bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100",
       danger:
         "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-sm",
     };

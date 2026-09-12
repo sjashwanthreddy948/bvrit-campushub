@@ -23,7 +23,6 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { TeamworkLaptopIllustration } from "@/components/illustrations/CollegiateScenes";
 import { PillTag } from "@/components/ui/PillTag";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
@@ -201,81 +200,68 @@ export default function OpportunitiesDiscoveryPage() {
 
   return (
     <DashboardShell role="student" userName="Alex Johnson">
-      {/* 0. ILLUSTRATED OPPORTUNITY DISCOVERY HERO */}
-      <div className="w-full rounded-3xl bg-white dark:bg-[#1B1C22] border border-[#F0E4E2] dark:border-[#2B2C35] p-5 sm:p-7 shadow-xs relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
-        <div className="space-y-2.5 flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge variant="amber">Recruitment &amp; Internships</Badge>
-            <Badge variant="powder">BVRIT Verified</Badge>
-            <span className="text-xs text-slate-500 font-semibold">{total} Active Drives</span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1A1D20] dark:text-[#F4EBE9] leading-tight">
-            Campus Opportunity Discovery <span className="text-[#F59E0B]">✦</span>
-          </h1>
-
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-            Verified full-time software engineering roles, summer internships, and technical hackathons posted directly by the campus placement cell.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center gap-2">
-            <PillTag
-              label="All Opportunities"
-              active={selectedType === "all"}
-              onClick={() => setSelectedType("all")}
-              size="sm"
-            />
-            <PillTag
-              label="Internships"
-              active={selectedType === "internship"}
-              onClick={() => setSelectedType("internship")}
-              size="sm"
-            />
-            <PillTag
-              label="Full-Time Jobs"
-              active={selectedType === "job"}
-              onClick={() => setSelectedType("job")}
-              size="sm"
-            />
-            <PillTag
-              label="Hackathons"
-              active={selectedType === "hackathon"}
-              onClick={() => setSelectedType("hackathon")}
-              size="sm"
-            />
-          </div>
-        </div>
-
-        <div className="shrink-0 max-w-[240px] hidden md:block">
-          <TeamworkLaptopIllustration className="max-h-[160px]" />
-        </div>
-      </div>
-
-      {/* 1. HEADER */}
-      <div className="flex flex-col gap-2 pb-4 border-b border-slate-200 dark:border-slate-800">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              Opportunities
+      {/* EXECUTIVE OPPORTUNITY HEADER */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs space-y-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                BVRIT Placement Cell
+              </span>
+              <span className="text-xs text-slate-500 font-semibold">{total} Active Drives</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+              Placement Drives &amp; Opportunities
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-              Discover internships, jobs, hackathons and more.
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+              Verified campus recruitment drives, internships, and technical hackathons for all 27 B.Tech sections.
             </p>
           </div>
-          <Link href="/saved">
-            <Button variant="outline" size="sm" leftIcon={<Bookmark className="h-4 w-4" />}>
-              Saved Items
-            </Button>
-          </Link>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <Link href="/saved">
+              <Button variant="outline" size="sm" leftIcon={<Bookmark className="h-4 w-4 text-blue-600" />} className="font-semibold text-xs border-slate-300 dark:border-slate-700">
+                Saved Items
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        {feedbackMessage && (
-          <div className="p-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-900 text-xs flex items-center gap-2 animate-in fade-in">
-            <Check className="h-4 w-4 text-blue-600 shrink-0" />
-            <span>{feedbackMessage}</span>
-          </div>
-        )}
+        {/* Quick Filter Type Chips */}
+        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-100 dark:border-slate-800">
+          <PillTag
+            label="All Opportunities"
+            active={selectedType === "all"}
+            onClick={() => setSelectedType("all")}
+            size="sm"
+          />
+          <PillTag
+            label="Internships"
+            active={selectedType === "internship"}
+            onClick={() => setSelectedType("internship")}
+            size="sm"
+          />
+          <PillTag
+            label="Full-Time Jobs"
+            active={selectedType === "job"}
+            onClick={() => setSelectedType("job")}
+            size="sm"
+          />
+          <PillTag
+            label="Hackathons"
+            active={selectedType === "hackathon"}
+            onClick={() => setSelectedType("hackathon")}
+            size="sm"
+          />
+        </div>
       </div>
+
+      {feedbackMessage && (
+        <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-900 text-xs flex items-center gap-2 animate-in fade-in mb-4">
+          <Check className="h-4 w-4 text-blue-600 shrink-0" />
+          <span>{feedbackMessage}</span>
+        </div>
+      )}
 
       {/* 2. FAST DEBOUNCED SEARCH & FILTERS BAR */}
       <div className="space-y-3">

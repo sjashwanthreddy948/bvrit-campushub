@@ -4,10 +4,10 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
     
-    /* Astotech Editorial & BVRIT Campus Palette */
+    /* BVRIT Institutional Collegiate Palette */
     --bg-page: #F8FAFC;
     --fg-page: #0F172A;
     --card: #FFFFFF;
@@ -15,45 +15,40 @@
     --border: #E2E8F0;
     --muted: #F1F5F9;
     --muted-foreground: #64748B;
-    --primary: #F59E0B;
-    --primary-hover: #D97706;
-    --primary-foreground: #0F172A;
+    --primary: #1E40AF;
+    --primary-hover: #1D4ED8;
+    --primary-foreground: #FFFFFF;
     --secondary: #F1F5F9;
     --secondary-foreground: #0F172A;
-    --accent: #CCFBF1;
-    --accent-foreground: #0D9488;
-    --bvrit-teal: #0D9488;
-    --bvrit-teal-hover: #0F766E;
-    --astotech-yellow: #F59E0B;
-    --astotech-yellow-light: #FEF3C7;
-    --destructive: #EF4444;
+    --accent: #EFF6FF;
+    --accent-foreground: #1E40AF;
+    --gold: #D97706;
+    --gold-light: #FEF3C7;
+    --destructive: #DC2626;
     --destructive-foreground: #FFFFFF;
-    --ring: #F59E0B;
+    --ring: #2563EB;
   }
 
   .dark {
-    /* Astotech Deep Obsidian & BVRIT Dark Palette */
-    --bg-page: #090D16;
+    --bg-page: #0B0F17;
     --fg-page: #F8FAFC;
     --card: #111827;
     --card-foreground: #F8FAFC;
     --border: #1F2937;
     --muted: #1E293B;
     --muted-foreground: #94A3B8;
-    --primary: #FBBF24;
-    --primary-hover: #F59E0B;
-    --primary-foreground: #090D16;
+    --primary: #3B82F6;
+    --primary-hover: #2563EB;
+    --primary-foreground: #FFFFFF;
     --secondary: #1E293B;
     --secondary-foreground: #F8FAFC;
-    --accent: #134E4A;
-    --accent-foreground: #5EEAD4;
-    --bvrit-teal: #14B8A6;
-    --bvrit-teal-hover: #2DD4BF;
-    --astotech-yellow: #FBBF24;
-    --astotech-yellow-light: #78350F;
-    --destructive: #DC2626;
+    --accent: #1E293B;
+    --accent-foreground: #60A5FA;
+    --gold: #F59E0B;
+    --gold-light: #78350F;
+    --destructive: #EF4444;
     --destructive-foreground: #FFFFFF;
-    --ring: #FBBF24;
+    --ring: #3B82F6;
   }
 
   * {
@@ -73,7 +68,6 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  /* Prevent iOS zoom on input focus by guaranteeing 16px font on inputs */
   input,
   select,
   textarea {
@@ -81,7 +75,7 @@
   }
 }
 
-/* Custom scrollbars that don't overflow */
+/* Crisp custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -92,224 +86,187 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(245, 158, 11, 0.3);
+  background: rgba(100, 116, 139, 0.3);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 158, 11, 0.6);
+  background: rgba(100, 116, 139, 0.6);
 }
 
-/* Astotech Editorial Pill Tag */
+/* ═══════════════════════════════════════════════════════════════════
+   BVRIT CampusHub Executive Design Tokens
+   Authoritative, Crisp, Modern & Enterprise-Grade
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Professional Surface Card */
+.academic-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.875rem;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dark .academic-card {
+  background-color: #111827;
+  border-color: #1F2937;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.academic-card:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+}
+
+.dark .academic-card:hover {
+  border-color: #374151;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.4);
+}
+
+/* Spotlight / Featured Placement Card */
+.academic-card-featured {
+  background-color: #FFFFFF;
+  border: 1.5px solid #2563EB;
+  border-radius: 0.875rem;
+  box-shadow: 0 4px 16px -2px rgba(37, 99, 235, 0.1);
+}
+
+.dark .academic-card-featured {
+  background-color: #111827;
+  border-color: #3B82F6;
+  box-shadow: 0 4px 20px -2px rgba(59, 130, 246, 0.15);
+}
+
+/* Modern Chip / Pill Tag */
 .pill-tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1.5px solid rgba(15, 23, 42, 0.12);
-  background-color: #ffffff;
-  color: #0F172A;
-  padding: 0.375rem 1rem;
+  border: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+  color: #334155;
+  padding: 0.35rem 0.85rem;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+  transition: all 0.15s ease;
   cursor: pointer;
   user-select: none;
 }
 
 .pill-tag:hover {
-  border-color: #F59E0B;
-  color: #D97706;
-  background-color: #FEF3C7;
-  transform: translateY(-1px);
+  border-color: #2563EB;
+  color: #1E40AF;
+  background-color: #EFF6FF;
 }
 
 .dark .pill-tag {
-  border-color: rgba(248, 250, 252, 0.15);
+  border-color: #1F2937;
   background-color: #111827;
-  color: #F8FAFC;
+  color: #CBD5E1;
 }
 
 .dark .pill-tag:hover {
-  border-color: #FBBF24;
-  color: #FBBF24;
+  border-color: #3B82F6;
+  color: #93C5FD;
   background-color: #1E293B;
 }
 
-/* Astotech Editorial Utility Classes */
-.astotech-yellow-block {
-  background-color: #F59E0B;
-  color: #0F172A;
-}
-
-.astotech-editorial-card {
-  background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-}
-
-.dark .astotech-editorial-card {
-  background-color: #111827;
-  border-color: #1F2937;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-}
-
-.editorial-highlight {
-  color: #D97706;
-}
-
-.dark .editorial-highlight {
-  color: #FBBF24;
-}
-
-.bvrit-highlight {
-  color: #0D9488;
-}
-
-.dark .bvrit-highlight {
-  color: #2DD4BF;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   BVRIT CampusHub Professional Collegiate Design Tokens (2026)
-   Clean, Premium, High-Contrast & Effortless to Understand
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* Professional Academic Surface Card */
-.academic-card {
-  background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dark .academic-card {
-  background-color: #0F172A;
-  border-color: #1E293B;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-}
-
-.academic-card:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
-}
-
-.dark .academic-card:hover {
-  border-color: #334155;
-  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.5);
-}
-
-/* Featured / Spotlight Card (e.g. Active Hiring Drive) */
-.academic-card-featured {
-  background-color: #FFFFFF;
-  border: 1.5px solid #F59E0B;
-  border-radius: 1rem;
-  box-shadow: 0 4px 16px -2px rgba(245, 158, 11, 0.12);
-}
-
-.dark .academic-card-featured {
-  background-color: #0F172A;
-  border-color: #D97706;
-  box-shadow: 0 4px 20px -2px rgba(245, 158, 11, 0.15);
-}
-
-/* Compatibility Aliases for Seamless Upgrade & Zero Regressions */
-.liquid-glass {
-  background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
-}
-
-.dark .liquid-glass {
-  background-color: #0F172A;
-  border-color: #1E293B;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-}
-
-.liquid-glass-card {
-  background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dark .liquid-glass-card {
-  background-color: #0F172A;
-  border-color: #1E293B;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-}
-
-.liquid-glass-card:hover {
-  border-color: #94A3B8;
-  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
-}
-
-.dark .liquid-glass-card:hover {
-  border-color: #334155;
-}
-
-.liquid-spotlight-card {
-  background-color: #FFFFFF;
-  border: 1.5px solid #F59E0B;
-  border-radius: 1rem;
-  box-shadow: 0 4px 16px -2px rgba(245, 158, 11, 0.12);
-}
-
-.dark .liquid-spotlight-card {
-  background-color: #0F172A;
-  border-color: #D97706;
-}
-
-/* Crisp Amber Primary Action Button */
-.liquid-btn-amber {
-  background-color: #F59E0B;
-  color: #0F172A;
-  font-weight: 700;
-  border-radius: 0.75rem;
-  border: 1px solid #D97706;
+/* Primary Navy / Blue Action Button */
+.liquid-btn-amber,
+.academic-btn-primary {
+  background-color: #1E40AF;
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 0.625rem;
+  border: 1px solid #1D4ED8;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   transition: all 0.15s ease;
 }
 
-.liquid-btn-amber:hover {
-  background-color: #D97706;
+.liquid-btn-amber:hover,
+.academic-btn-primary:hover {
+  background-color: #1D4ED8;
   color: #FFFFFF;
-  box-shadow: 0 2px 6px 0 rgba(217, 119, 6, 0.3);
+  box-shadow: 0 4px 12px 0 rgba(30, 64, 175, 0.25);
 }
 
-/* Crisp Clean Outline Button */
-.liquid-btn-glass {
+.dark .liquid-btn-amber,
+.dark .academic-btn-primary {
+  background-color: #2563EB;
+  border-color: #3B82F6;
+}
+
+.dark .liquid-btn-amber:hover,
+.dark .academic-btn-primary:hover {
+  background-color: #1D4ED8;
+}
+
+/* Clean Outline Button */
+.liquid-btn-glass,
+.academic-btn-outline {
   background-color: #FFFFFF;
-  border: 1px solid #CBD5E1;
-  color: #0F172A;
+  border: 1px solid #E2E8F0;
+  color: #1E293B;
   font-weight: 600;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  border-radius: 0.625rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
   transition: all 0.15s ease;
 }
 
-.dark .liquid-btn-glass {
-  background-color: #1E293B;
-  border-color: #334155;
+.dark .liquid-btn-glass,
+.dark .academic-btn-outline {
+  background-color: #111827;
+  border-color: #1F2937;
   color: #F8FAFC;
 }
 
-.liquid-btn-glass:hover {
-  border-color: #94A3B8;
+.liquid-btn-glass:hover,
+.academic-btn-outline:hover {
+  border-color: #CBD5E1;
   background-color: #F8FAFC;
 }
 
-.dark .liquid-btn-glass:hover {
-  background-color: #334155;
+.dark .liquid-btn-glass:hover,
+.dark .academic-btn-outline:hover {
+  background-color: #1E293B;
+  border-color: #374151;
 }
 
-/* Verified Student Avatar Ring */
+/* Compatibility Aliases */
+.liquid-glass,
+.liquid-glass-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.875rem;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04);
+  transition: all 0.15s ease;
+}
+
+.dark .liquid-glass,
+.dark .liquid-glass-card {
+  background-color: #111827;
+  border-color: #1F2937;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.liquid-spotlight-card {
+  background-color: #FFFFFF;
+  border: 1.5px solid #2563EB;
+  border-radius: 0.875rem;
+  box-shadow: 0 4px 16px -2px rgba(37, 99, 235, 0.1);
+}
+
+.dark .liquid-spotlight-card {
+  background-color: #111827;
+  border-color: #3B82F6;
+}
+
 .story-ring-gradient {
-  background: #F59E0B;
+  background: #2563EB;
   padding: 2px;
   border-radius: 9999px;
   display: inline-flex;

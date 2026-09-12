@@ -12,15 +12,15 @@ export function Card({
   ...props
 }: CardProps) {
   const variantStyles = {
-    default: "border-[#F0E4E2] dark:border-[#2B2C35] bg-white dark:bg-[#1B1C22] shadow-xs",
-    liquid: "liquid-glass-card",
-    spotlight: "liquid-spotlight-card",
+    default: "academic-card",
+    liquid: "academic-card",
+    spotlight: "academic-card-featured",
   };
 
   return (
     <div
       className={cn(
-        "w-full rounded-2xl border transition-all overflow-hidden",
+        "w-full rounded-xl border transition-all overflow-hidden",
         variantStyles[variant],
         className
       )}
@@ -54,7 +54,7 @@ export function CardTitle({
   return (
     <h3
       className={cn(
-        "text-base sm:text-lg font-bold tracking-tight text-[#1A1D20] dark:text-[#F4EBE9]",
+        "text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100",
         className
       )}
       {...props}
@@ -105,7 +105,7 @@ export function CardFooter({
   return (
     <div
       className={cn(
-        "p-4 sm:p-5 pt-2 sm:pt-3 border-t border-[#F0E4E2] dark:border-[#2B2C35] flex items-center justify-between",
+        "p-4 sm:p-5 pt-2 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between",
         className
       )}
       {...props}

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   GraduationCap,
@@ -265,7 +266,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF7F6] dark:bg-[#131418] text-[#1A1D20] dark:text-[#F4EBE9] flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8">
       {/* Top Brand & Theme Toggle */}
       <div className="absolute top-4 right-4">
         <ThemeToggle />
@@ -273,33 +274,33 @@ export default function RegisterPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md md:max-w-xl">
         <div className="flex justify-center mb-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#F59E0B] flex items-center justify-center text-white shadow-xs">
-            <GraduationCap className="h-6 w-6" />
+          <div className="h-12 w-12 rounded-2xl bg-white dark:bg-slate-900 p-1.5 flex items-center justify-center shrink-0 shadow-sm border border-slate-200 dark:border-slate-800">
+            <Image src="/images/bvrit-logo.png" alt="BVRIT Crest" width={40} height={40} className="object-contain" />
           </div>
         </div>
-        <h2 className="text-center text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1A1D20] dark:text-[#F4EBE9]">
-          Create Student Profile <span className="text-[#F59E0B]">✦</span>
+        <h2 className="text-center text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
+          Student Profile Registration
         </h2>
         <p className="mt-1 text-center text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-          Join CampusHub to discover verified opportunities, track circulars, and match with campus roles.
+          Register with BVRIT CampusHub to track verified campus placement drives, departmental circulars, and ATS resume scoring.
         </p>
       </div>
 
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md md:max-w-xl">
-        <Card className="shadow-xs border-[#F0E4E2] dark:border-[#2B2C35] bg-white dark:bg-[#1A1D20]">
+        <Card className="shadow-sm border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           {/* Multi-Step Progress Indicator */}
-          <div className="px-4 sm:px-6 pt-5 pb-3 border-b border-[#F0E4E2] dark:border-[#2B2C35]">
+          <div className="px-4 sm:px-6 pt-5 pb-3 border-b border-slate-200 dark:border-slate-800">
             <div className="grid grid-cols-3 gap-2 text-xs font-semibold mb-2.5">
               <button
                 type="button"
                 onClick={() => setCurrentStep(1)}
                 className={`text-left p-2 rounded-xl transition-colors ${
                   currentStep === 1
-                    ? "text-[#F59E0B] bg-[#FFF0EE] dark:bg-[#F59E0B]/15 font-bold"
+                    ? "text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 font-bold border border-blue-200/70 dark:border-blue-800/70"
                     : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
                 }`}
               >
-                <div className="text-[10px] text-slate-400 uppercase">Step 1</div>
+                <div className="text-[10px] text-slate-400 uppercase font-medium">Step 1</div>
                 <div className="truncate">Basic Info</div>
               </button>
 
@@ -310,11 +311,11 @@ export default function RegisterPage() {
                 }}
                 className={`text-left p-2 rounded-xl transition-colors ${
                   currentStep === 2
-                    ? "text-[#F59E0B] bg-[#FFF0EE] dark:bg-[#F59E0B]/15 font-bold"
+                    ? "text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 font-bold border border-blue-200/70 dark:border-blue-800/70"
                     : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
                 }`}
               >
-                <div className="text-[10px] text-slate-400 uppercase">Step 2</div>
+                <div className="text-[10px] text-slate-400 uppercase font-medium">Step 2</div>
                 <div className="truncate">Dept &amp; CGPA</div>
               </button>
 
@@ -325,19 +326,19 @@ export default function RegisterPage() {
                 }}
                 className={`text-left p-2 rounded-xl transition-colors ${
                   currentStep === 3
-                    ? "text-[#F59E0B] bg-[#FFF0EE] dark:bg-[#F59E0B]/15 font-bold"
+                    ? "text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 font-bold border border-blue-200/70 dark:border-blue-800/70"
                     : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-300"
                 }`}
               >
-                <div className="text-[10px] text-slate-400 uppercase">Step 3</div>
-                <div className="truncate">Skills (AI Match)</div>
+                <div className="text-[10px] text-slate-400 uppercase font-medium">Step 3</div>
+                <div className="truncate">Skills &amp; Match</div>
               </button>
             </div>
 
             {/* Visual Step Bar */}
-            <div className="w-full bg-[#F0E4E2] dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
               <div
-                className="bg-[#F59E0B] h-full transition-all duration-300"
+                className="bg-blue-600 dark:bg-blue-500 h-full transition-all duration-300 rounded-full"
                 style={{
                   width: currentStep === 1 ? "33.3%" : currentStep === 2 ? "66.6%" : "100%",
                 }}

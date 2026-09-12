@@ -25,7 +25,7 @@ export function DashboardShell({
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
   return (
-    <div className="flex h-screen w-full bg-[#FFF7F6] dark:bg-[#131418] text-[#1A1D20] dark:text-[#F4EBE9] overflow-hidden">
+    <div className="flex h-screen w-full bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 overflow-hidden">
       {/* 1. Desktop Sidebar (Hidden on mobile) */}
       <div className="hidden md:flex md:shrink-0">
         <Sidebar role={role} unreadNotifications={unreadNotifications} />

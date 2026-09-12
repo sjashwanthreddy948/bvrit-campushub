@@ -29,9 +29,8 @@ import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { WhatsAppShareModal } from "@/components/ui/WhatsAppShareModal";
 import { PillTag } from "@/components/ui/PillTag";
-import { CounselingGuidanceIllustration } from "@/components/illustrations/CollegiateScenes";
+import { WhatsAppShareModal } from "@/components/ui/WhatsAppShareModal";
 
 import {
   getAllCircularsForFaculty,
@@ -215,44 +214,44 @@ export default function FacultyDashboardPage() {
   return (
     <DashboardShell role="faculty" userName="Prof. K. Sharma">
       <div className="space-y-6 pb-12 max-w-7xl mx-auto">
-        {/* Collegiate Illustrated Hero Banner */}
-        <Card className="border-[#F0E4E2] dark:border-[#2B2C35] bg-gradient-to-br from-white via-[#FFF7F6] to-[#FBF1EF] dark:from-[#1A1D20] dark:via-[#1E2024] dark:to-[#17181C] shadow-xs overflow-hidden">
-          <div className="p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-3 flex-1 text-center md:text-left">
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                <PillTag variant="amber" size="sm">Faculty Portal</PillTag>
-                <PillTag variant="outline" size="sm">CSE Department</PillTag>
-                <PillTag variant="powder" size="sm">Vedic.ai Integration</PillTag>
-              </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A1D20] dark:text-[#F4EBE9] tracking-tight">
-                  Faculty Academic Portal <span className="text-[#F59E0B]">✦</span>
-                </h1>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
-                  Publish official departmental circulars and broadcast course assignment reminders with Vedic.ai integration to your cohorts.
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
-                <Link href="/faculty/circulars/new">
-                  <Button size="sm" variant="amber" leftIcon={<Plus className="h-4 w-4" />} className="min-h-[44px]">
-                    New Circular
-                  </Button>
-                </Link>
-                <Link href="/faculty/assignments/new">
-                  <Button size="sm" variant="outline" leftIcon={<Plus className="h-4 w-4" />} className="min-h-[44px] border-[#F0E4E2]">
-                    New Assignment
-                  </Button>
-                </Link>
-              </div>
+        {/* Faculty Institutional Header */}
+        <div className="academic-card p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="space-y-3 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 font-bold text-xs">
+                Faculty Portal
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold text-xs">
+                Department of CSE &bull; BVRIT Autonomous
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-semibold text-xs">
+                Vedic.ai Integration Live
+              </span>
             </div>
-
-            <div className="shrink-0 hidden sm:flex justify-center items-center">
-              <CounselingGuidanceIllustration className="w-56 h-auto drop-shadow-xs" />
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
+                Academic Coursework &amp; Circulars Console
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-2xl">
+                Publish official department notices, dispatch course assignment deadlines, and track section-level submission turnout across all student cohorts.
+              </p>
             </div>
           </div>
-        </Card>
+
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <Link href="/faculty/circulars/new">
+              <Button size="md" variant="primary" leftIcon={<Plus className="h-4 w-4" />} className="font-semibold shadow-xs">
+                Post Circular
+              </Button>
+            </Link>
+            <Link href="/faculty/assignments/new">
+              <Button size="md" variant="outline" leftIcon={<Plus className="h-4 w-4" />} className="font-semibold border-slate-200 dark:border-slate-700">
+                New Assignment
+              </Button>
+            </Link>
+          </div>
+        </div>
 
         {feedback && (
           <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs flex items-center gap-2">

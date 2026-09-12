@@ -21,7 +21,6 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { CounselingGuidanceIllustration } from "@/components/illustrations/CollegiateScenes";
 import { PillTag } from "@/components/ui/PillTag";
 import { Input } from "@/components/ui/Input";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -124,38 +123,35 @@ export default function AssignmentsPage() {
 
   return (
     <DashboardShell role="student" userName={studentCohort?.name || "Alex Johnson"}>
-      {/* 0. ILLUSTRATED ACADEMIC ASSIGNMENT BANNER */}
-      <div className="w-full rounded-3xl bg-white dark:bg-[#1B1C22] border border-[#F0E4E2] dark:border-[#2B2C35] p-5 sm:p-7 shadow-xs relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
-        <div className="space-y-2.5 flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge variant="amber">Coursework &amp; Labs</Badge>
-            <Badge variant="powder">Vedic.ai Integration</Badge>
-            <span className="text-xs text-slate-500 font-semibold">{counts.all} Active Tasks</span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1A1D20] dark:text-[#F4EBE9] leading-tight">
-            Assignment Reminders <span className="text-[#F59E0B]">✦</span>
-          </h1>
-
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-            Upcoming lab tasks, problem sets, and academic deadlines for {studentCohort?.department || "CSE"} Year {studentCohort?.year || 3} with direct 1-tap Vedic.ai submission links.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center gap-2">
-            {statusTabs.map((tab) => (
-              <PillTag
-                key={tab.id}
-                label={tab.label}
-                active={activeTab === tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                size="sm"
-              />
-            ))}
+      {/* EXECUTIVE ACADEMIC ASSIGNMENT HEADER */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs space-y-3 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                Coursework &amp; Labs
+              </span>
+              <span className="text-xs text-slate-500 font-semibold">{counts.all} Active Tasks</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+              Academic Tasks &amp; Deadlines
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+              Upcoming lab tasks, problem sets, and submission reminders for {studentCohort?.department || "CSE"} Year {studentCohort?.year || 3} with official Vedic.ai portal integration.
+            </p>
           </div>
         </div>
 
-        <div className="shrink-0 max-w-[240px] hidden md:block">
-          <CounselingGuidanceIllustration className="max-h-[160px]" />
+        <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-slate-100 dark:border-slate-800">
+          {statusTabs.map((tab) => (
+            <PillTag
+              key={tab.id}
+              label={tab.label}
+              active={activeTab === tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              size="sm"
+            />
+          ))}
         </div>
       </div>
 
