@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UserRole } from "@/types/database";
-import { logoutUser, switchRole } from "@/lib/auth/actions";
+import { logoutUser } from "@/lib/auth/actions";
 
 export interface NavItem {
   label: string;
@@ -125,26 +125,6 @@ export function Sidebar({ role = "student", className, onNavigate, unreadNotific
     }
   };
 
-  const [switching, setSwitching] = React.useState<string | null>(null);
-
-  const handleRoleSwitch = async (targetRole: UserRole) => {
-    try {
-      setSwitching(targetRole);
-      if (onNavigate) onNavigate();
-      const res = await switchRole(targetRole);
-      if (res.success && res.redirectUrl) {
-        window.location.href = res.redirectUrl;
-      }
-    } catch (err) {
-      console.error("Role switch error:", err);
-      if (targetRole === "faculty") window.location.href = "/faculty/dashboard";
-      else if (targetRole === "coordinator") window.location.href = "/coordinator/dashboard";
-      else if (targetRole === "hod") window.location.href = "/hod/dashboard";
-      else if (targetRole === "admin") window.location.href = "/admin/dashboard";
-      else window.location.href = "/dashboard";
-    }
-  };
-
   return (
     <aside
       className={cn(
@@ -220,78 +200,18 @@ export function Sidebar({ role = "student", className, onNavigate, unreadNotific
         })}
       </nav>
 
-      {/* Role Switcher Preview Box */}
-      <div className="p-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 px-1">
-          <Sparkles className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-          <span>Institutional Role Switcher</span>
-        </div>
-        <div className="grid grid-cols-5 gap-1 text-center">
-          <button
-            type="button"
-            disabled={switching !== null}
-            onClick={() => handleRoleSwitch("student")}
-            className={cn(
-              "py-1.5 text-[10px] rounded-md font-bold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer",
-              role === "student"
-                ? "bg-blue-600 text-white shadow-xs font-black"
-                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700"
-            )}
-          >
-            Student
-          </button>
-          <button
-            type="button"
-            disabled={switching !== null}
-            onClick={() => handleRoleSwitch("faculty")}
-            className={cn(
-              "py-1.5 text-[10px] rounded-md font-bold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer",
-              role === "faculty"
-                ? "bg-blue-600 text-white shadow-xs font-black"
-                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700"
-            )}
-          >
-            Faculty
-          </button>
-          <button
-            type="button"
-            disabled={switching !== null}
-            onClick={() => handleRoleSwitch("coordinator")}
-            className={cn(
-              "py-1.5 text-[10px] rounded-md font-bold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer",
-              role === "coordinator"
-                ? "bg-blue-600 text-white shadow-xs font-black"
-                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700"
-            )}
-          >
-            TPO
-          </button>
-          <button
-            type="button"
-            disabled={switching !== null}
-            onClick={() => handleRoleSwitch("hod")}
-            className={cn(
-              "py-1.5 text-[10px] rounded-md font-bold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer",
-              role === "hod"
-                ? "bg-blue-600 text-white shadow-xs font-black"
-                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700"
-            )}
-          >
-            HOD
-          </button>
-          <button
-            type="button"
-            disabled={switching !== null}
-            onClick={() => handleRoleSwitch("admin")}
-            className={cn(
-              "py-1.5 text-[10px] rounded-md font-bold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer",
-              role === "admin"
-                ? "bg-blue-600 text-white shadow-xs font-black"
-                : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700"
-            )}
-          >
-            Admin
-          </button>
+      {/* Verified Institutional Portal Badge */}
+      <div className="p-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 shrink-0">
+        <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 shadow-2xs">
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200 truncate capitalize">
+              {role === "coordinator" ? "TPO Officer Portal" : role === "hod" ? "HOD Dept Portal" : `${role} Portal`}
+            </p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
+              BVRIT Autonomous &bull; NAAC &apos;A+&apos;
+            </p>
+          </div>
         </div>
       </div>
 
