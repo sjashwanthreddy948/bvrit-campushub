@@ -87,11 +87,13 @@ export function TopBar({
           href={getHomeRoute()}
           className="flex items-center gap-3 font-bold text-slate-900 dark:text-white group"
         >
-          <img
-            src="/images/bvrit-logo.png"
-            alt="BVRIT Logo"
-            className="h-8 sm:h-9 w-auto object-contain shrink-0"
-          />
+          <div className="bg-white dark:bg-white/95 px-2 py-0.5 rounded-lg border border-slate-200/80 dark:border-white/20 shadow-xs flex items-center shrink-0">
+            <img
+              src="/images/bvrit-logo.png"
+              alt="BVRIT Logo"
+              className="h-7 sm:h-8 w-auto object-contain shrink-0"
+            />
+          </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="text-base sm:text-lg font-black tracking-tight leading-none text-slate-900 dark:text-white">

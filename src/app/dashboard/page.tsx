@@ -20,6 +20,10 @@ import {
   TrendingUp,
   Bell,
   Code2,
+  Flame,
+  Award,
+  Zap,
+  Check,
 } from "lucide-react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
@@ -41,6 +45,27 @@ export default function StudentDashboardPage() {
   const [loading, setLoading] = React.useState(true);
   const [savingId, setSavingId] = React.useState<string | null>(null);
   const [unreadCount, setUnreadCount] = React.useState<number>(0);
+
+  // Gamified Career XP & Daily Quests State
+  const [userXp, setUserXp] = React.useState(3450);
+  const [completedQuests, setCompletedQuests] = React.useState<Record<string, boolean>>({
+    "quest-1": true,
+    "quest-2": false,
+    "quest-3": false,
+  });
+  const [xpRewardNotice, setXpRewardNotice] = React.useState<string | null>(null);
+
+  const toggleQuest = (id: string, xpValue: number) => {
+    setCompletedQuests((prev) => {
+      const isNowDone = !prev[id];
+      setUserXp((curr) => (isNowDone ? curr + xpValue : Math.max(0, curr - xpValue)));
+      if (isNowDone) {
+        setXpRewardNotice(`+${xpValue} XP Earned! 🚀`);
+        setTimeout(() => setXpRewardNotice(null), 2500);
+      }
+      return { ...prev, [id]: isNowDone };
+    });
+  };
 
   // Dynamic Time of Day Greeting
   const getGreeting = () => {
@@ -179,6 +204,157 @@ export default function StudentDashboardPage() {
           </Link>
         </div>
       </div>
+
+      {/* 1.5 GAMIFIED CAREER XP & DAILY QUESTS ACCELERATOR */}
+      <section className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-5 sm:p-6 border border-indigo-900/60 shadow-xl space-y-4">
+        {/* Top row: Streak + Level + Reward toast */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-indigo-800/40 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-red-500 flex items-center justify-center text-white shadow-lg shadow-amber-500/20 shrink-0">
+              <Flame className="h-6 w-6 fill-white text-white animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-1.5">
+                  5-Day Placement Streak! 🔥
+                </span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  1.5x XP Boost
+                </span>
+              </div>
+              <p className="text-xs text-indigo-200">
+                Level 4 Tech Prodigy &bull; {userXp.toLocaleString()} / 4,000 XP &bull; Top 5% in CSE 2026 Batch
+              </p>
+            </div>
+          </div>
+
+          {/* Active Days Pill Row */}
+          <div className="flex items-center gap-1.5 self-start sm:self-auto">
+            {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+              <div
+                key={i}
+                className={`w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-black transition-all ${
+                  i < 5
+                    ? "bg-amber-500 text-slate-950 shadow-xs"
+                    : i === 5
+                    ? "bg-amber-500/30 text-amber-300 border border-amber-400/60 animate-pulse"
+                    : "bg-slate-800 text-slate-500"
+                }`}
+              >
+                {d}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* XP Progress Bar */}
+        <div className="space-y-1.5">
+          <div className="flex justify-between text-xs font-semibold text-indigo-200">
+            <span>Progress to Level 5 (Senior Placement Fellow)</span>
+            <span className="text-amber-300 font-bold">
+              {Math.min(100, Math.round((userXp / 4000) * 100))}% ({4000 - userXp} XP to level up)
+            </span>
+          </div>
+          <div className="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden border border-indigo-900/60 p-0.5">
+            <div
+              className="bg-gradient-to-r from-amber-400 via-red-500 to-indigo-400 h-full rounded-full transition-all duration-500"
+              style={{ width: `${Math.min(100, Math.round((userXp / 4000) * 100))}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Daily Quests Interactive Checklist */}
+        <div className="pt-2">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+              <Zap className="h-3.5 w-3.5 text-amber-400" />
+              Today&apos;s Daily Quests (+100 XP Total)
+            </span>
+            {xpRewardNotice && (
+              <span className="text-xs font-black text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/40 animate-bounce">
+                {xpRewardNotice}
+              </span>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {/* Quest 1 */}
+            <button
+              type="button"
+              onClick={() => toggleQuest("quest-1", 50)}
+              className={`p-3 rounded-xl border text-left flex items-start justify-between gap-2 transition-all cursor-pointer ${
+                completedQuests["quest-1"]
+                  ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
+                  : "bg-slate-800/60 border-slate-700/60 text-slate-300 hover:border-slate-500"
+              }`}
+            >
+              <div className="space-y-0.5">
+                <div className="text-xs font-bold flex items-center gap-1.5">
+                  <span className={completedQuests["quest-1"] ? "line-through text-slate-400" : ""}>
+                    Solve 1 LeetCode Pattern
+                  </span>
+                </div>
+                <div className="text-[10px] text-slate-400">Skills Studio &bull; +50 XP</div>
+              </div>
+              <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 ${
+                completedQuests["quest-1"] ? "bg-emerald-500 text-slate-950" : "border border-slate-600"
+              }`}>
+                {completedQuests["quest-1"] && <Check className="h-3.5 w-3.5 stroke-[3]" />}
+              </div>
+            </button>
+
+            {/* Quest 2 */}
+            <button
+              type="button"
+              onClick={() => toggleQuest("quest-2", 30)}
+              className={`p-3 rounded-xl border text-left flex items-start justify-between gap-2 transition-all cursor-pointer ${
+                completedQuests["quest-2"]
+                  ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
+                  : "bg-slate-800/60 border-slate-700/60 text-slate-300 hover:border-slate-500"
+              }`}
+            >
+              <div className="space-y-0.5">
+                <div className="text-xs font-bold flex items-center gap-1.5">
+                  <span className={completedQuests["quest-2"] ? "line-through text-slate-400" : ""}>
+                    Audit ATS Resume Score
+                  </span>
+                </div>
+                <div className="text-[10px] text-slate-400">Resume Studio &bull; +30 XP</div>
+              </div>
+              <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 ${
+                completedQuests["quest-2"] ? "bg-emerald-500 text-slate-950" : "border border-slate-600"
+              }`}>
+                {completedQuests["quest-2"] && <Check className="h-3.5 w-3.5 stroke-[3]" />}
+              </div>
+            </button>
+
+            {/* Quest 3 */}
+            <button
+              type="button"
+              onClick={() => toggleQuest("quest-3", 20)}
+              className={`p-3 rounded-xl border text-left flex items-start justify-between gap-2 transition-all cursor-pointer ${
+                completedQuests["quest-3"]
+                  ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
+                  : "bg-slate-800/60 border-slate-700/60 text-slate-300 hover:border-slate-500"
+              }`}
+            >
+              <div className="space-y-0.5">
+                <div className="text-xs font-bold flex items-center gap-1.5">
+                  <span className={completedQuests["quest-3"] ? "line-through text-slate-400" : ""}>
+                    Review AWS Criteria
+                  </span>
+                </div>
+                <div className="text-[10px] text-slate-400">Drive Board &bull; +20 XP</div>
+              </div>
+              <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 ${
+                completedQuests["quest-3"] ? "bg-emerald-500 text-slate-950" : "border border-slate-600"
+              }`}>
+                {completedQuests["quest-3"] && <Check className="h-3.5 w-3.5 stroke-[3]" />}
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* 2. EXECUTIVE KPI METRICS (4 CLEAN DATA TILES) */}
       <section aria-label="Academic & Placement Metrics" className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">

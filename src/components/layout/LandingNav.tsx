@@ -14,11 +14,13 @@ export function LandingNav() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Institutional Brand Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <img
-            src="/images/bvrit-logo.png"
-            alt="BVRIT Logo"
-            className="h-9 w-auto object-contain shrink-0"
-          />
+          <div className="bg-white dark:bg-white/95 px-2 py-0.5 rounded-lg border border-slate-200/80 dark:border-white/20 shadow-xs flex items-center shrink-0">
+            <img
+              src="/images/bvrit-logo.png"
+              alt="BVRIT Logo"
+              className="h-8 w-auto object-contain shrink-0"
+            />
+          </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5">
               <span className="bg-[#E23636] text-white font-black text-xs px-1.5 py-0.5 uppercase tracking-wider rounded-xs">

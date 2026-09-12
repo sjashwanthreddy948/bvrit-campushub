@@ -20,6 +20,10 @@ import {
   Users,
   Award,
   ChevronRight,
+  Bot,
+  Send,
+  Flame,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
@@ -102,6 +106,190 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
+function InteractiveAiSandbox() {
+  const [query, setQuery] = React.useState("");
+  const [answer, setAnswer] = React.useState("");
+  const [thinking, setThinking] = React.useState(false);
+
+  const samplePrompts = [
+    "5 + 5",
+    "What is 15 * 24?",
+    "Who is the Principal of BVRIT?",
+    "Explain Binary Search in Python",
+    "Highest placement package at BVRIT?",
+  ];
+
+  const askAi = async (qText: string) => {
+    const q = qText.trim();
+    if (!q || thinking) return;
+    setQuery(q);
+    setAnswer("");
+    setThinking(true);
+    try {
+      const res = await fetch("/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: q }),
+      });
+      if (!res.ok || !res.body) throw new Error("API error");
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let acc = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        acc += decoder.decode(value, { stream: true });
+        setAnswer(acc);
+      }
+    } catch {
+      setAnswer("⚠️ Unable to reach AI reasoning server. Please try again.");
+    } finally {
+      setThinking(false);
+    }
+  };
+
+  return (
+    <div className="w-full bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-2xl space-y-4 text-white">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white shadow-xs">
+            <Sparkles className="h-4 w-4" />
+          </div>
+          <div>
+            <h3 className="text-sm font-black tracking-tight text-white flex items-center gap-2">
+              <span>CampusHub AI Live Terminal</span>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                Gemini 3.5 Thinking
+              </span>
+            </h3>
+            <p className="text-[11px] text-slate-400">
+              Test real-time calculation, coding, and campus knowledge instantly.
+            </p>
+          </div>
+        </div>
+        <Link href="/ai">
+          <Button size="sm" variant="outline" className="text-xs border-slate-700 text-slate-300 hover:text-white">
+            Full AI Studio &rarr;
+          </Button>
+        </Link>
+      </div>
+
+      {/* Quick Prompt Chips */}
+      <div className="flex items-center gap-1.5 flex-wrap">
+        <span className="text-[11px] font-bold text-slate-400 mr-1 flex items-center gap-1">
+          <Zap className="h-3 w-3 text-amber-400" />
+          Quick Test:
+        </span>
+        {samplePrompts.map((p, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => askAi(p)}
+            className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 border border-slate-700/80 transition-all cursor-pointer"
+          >
+            {p}
+          </button>
+        ))}
+      </div>
+
+      {/* Input bar */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          askAi(query);
+        }}
+        className="flex items-center gap-2"
+      >
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Ask anything... e.g. 5+5, Two Sum, BVRIT Placements"
+          className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-500/80 transition-colors font-mono"
+        />
+        <Button
+          type="submit"
+          disabled={thinking || !query.trim()}
+          size="sm"
+          className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4"
+        >
+          {thinking ? (
+            <span className="flex items-center gap-1">
+              <Sparkles className="h-3.5 w-3.5 animate-spin" />
+              Thinking...
+            </span>
+          ) : (
+            <span className="flex items-center gap-1">
+              <Send className="h-3.5 w-3.5" />
+              Ask
+            </span>
+          )}
+        </Button>
+      </form>
+
+      {/* Live Answer Box */}
+      {(thinking || answer) && (
+        <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs leading-relaxed space-y-2 animate-in fade-in duration-200">
+          {thinking && !answer && (
+            <div className="flex items-center gap-2 text-amber-400 font-bold">
+              <Sparkles className="h-3.5 w-3.5 animate-spin" />
+              <span>CampusHub AI is thinking through your question...</span>
+            </div>
+          )}
+          {answer && (
+            <div className="text-slate-200 font-sans whitespace-pre-wrap">
+              {answer}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LiveCampusPulseTicker() {
+  const updates = [
+    { badge: "🔥 HOT SHORTLIST", text: "Microsoft ₹44 LPA: 18 BVRIT students shortlisted for final technical round", highlight: "Microsoft ₹44 LPA" },
+    { badge: "⚡ URGENT DEADLINE", text: "Amazon AWS SDE Cloud Intern (₹28 LPA) closes in 48 hours — CSE / IT / ECE eligible", highlight: "Amazon AWS" },
+    { badge: "🏆 PLACEMENT RECORD", text: "1,540+ verified campus offers confirmed across 27 autonomous engineering sections", highlight: "1,540+ offers" },
+    { badge: "🎯 DAILY STREAK", text: "1,420 students actively solving today's DSA pattern challenge in Skills Studio", highlight: "1,420 students" },
+    { badge: "📢 TPO CIRCULAR", text: "Qualcomm India written test schedule released on official coordinator portal", highlight: "Qualcomm India" },
+    { badge: "🤖 AI REASONING", text: "Gemini 3.5 Thinking integrated into CampusHub AI for instant problem solving & interview prep", highlight: "Gemini 3.5" },
+  ];
+
+  return (
+    <div className="bg-slate-950 text-white text-xs border-b border-slate-800/80 overflow-hidden relative z-20 py-2.5 px-3">
+      <div className="max-w-7xl mx-auto flex items-center gap-3">
+        <div className="shrink-0 flex items-center gap-2 bg-[#E23636] text-white font-black text-[10px] uppercase px-2.5 py-1 rounded-md shadow-xs">
+          <span className="h-2 w-2 rounded-full bg-white animate-ping" />
+          <span>CAMPUS PULSE</span>
+        </div>
+
+        <div className="flex-1 overflow-hidden relative">
+          <div className="flex items-center gap-8 animate-pulse text-[11px] sm:text-xs">
+            {updates.map((u, i) => (
+              <div key={i} className="inline-flex items-center gap-2 shrink-0 font-medium text-slate-300">
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-amber-400 border border-slate-700">
+                  {u.badge}
+                </span>
+                <span>{u.text}</span>
+                {i < updates.length - 1 && <span className="text-slate-600 ml-3">&bull;</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <Link
+          href="/opportunities"
+          className="hidden md:flex items-center gap-1 text-[11px] font-bold text-amber-400 hover:text-amber-300 shrink-0"
+        >
+          <span>Live Board &rarr;</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const [isTransitioning, setIsTransitioning] = React.useState(false);
@@ -125,16 +313,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 overflow-x-hidden selection:bg-[#E23636] selection:text-white">
       <LandingNav />
-
-      {/* ── Institutional Accreditation Notice Bar ────────────────────── */}
-      <div className="bg-slate-900 text-white text-xs py-2 px-4 text-center font-medium border-b border-slate-800 flex items-center justify-center gap-2 flex-wrap z-20">
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#E23636] text-white font-bold text-[10px] uppercase">
-          Placement Season 2025–2026
-        </span>
-        <span>B.V. Raju Institute of Technology • Autonomous • NAAC &apos;A+&apos; Grade • JNTU Hyderabad</span>
-        <span className="hidden md:inline text-slate-400">|</span>
-        <span className="text-amber-400 font-semibold hidden md:inline">1,540+ Campus Offers Confirmed</span>
-      </div>
+      <LiveCampusPulseTicker />
 
       {/* ═════════════════════════════════════════════════════════════════════ */}
       {/* ── 1. MARVEL-STYLE EDITORIAL HERO SHOWCASE ───────────────────────── */}
@@ -435,6 +614,11 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── 2.5 INTERACTIVE AI SANDBOX SHOWCASE ────────────────────────────── */}
+      <section className="py-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <InteractiveAiSandbox />
+      </section>
+
       {/* ═════════════════════════════════════════════════════════════════════ */}
       {/* ── 3. ACTIVE PLACEMENT DRIVES DIRECTORY ──────────────────────────── */}
       {/* ═════════════════════════════════════════════════════════════════════ */}
@@ -459,109 +643,159 @@ export default function LandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Drive 1: Amazon */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
+          <div className="group relative bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm hover:shadow-xl hover:border-amber-500/50 dark:hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded">
-                  Internship + PPO
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-800/60">
+                  🔥 Internship + PPO
                 </span>
-                <span className="text-xs text-slate-500">Due in 5 days</span>
+                <span className="text-[11px] font-bold text-red-500 flex items-center gap-1">
+                  <Clock className="h-3 w-3" />
+                  5d left
+                </span>
               </div>
-              <div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Amazon Web Services</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">SDE Cloud &amp; DevOps Intern</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-black text-sm shrink-0 border border-amber-500/20">
+                  AWS
+                </div>
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                    Amazon Web Services
+                  </h3>
+                  <p className="text-xs text-slate-500">SDE Cloud &amp; DevOps Intern</p>
+                </div>
               </div>
-              <div className="text-sm font-black text-[#E23636]">
-                ₹28.00 LPA CTC
+              <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                <span className="text-xs font-medium text-slate-500">Package Offer:</span>
+                <span className="text-sm font-black text-[#E23636]">
+                  ₹28.00 LPA CTC
+                </span>
               </div>
-              <div className="text-xs text-slate-500">
-                Eligible: B.Tech CSE, IT, ECE (CGPA &ge; 7.5)
+              <div className="text-[11px] text-slate-500 font-medium">
+                🎯 Eligible: CSE, IT, ECE (CGPA &ge; 7.5)
               </div>
             </div>
             <Link href="/login" className="w-full">
-              <Button variant="outline" size="sm" fullWidth className="font-semibold text-xs">
-                View &amp; Prepare
+              <Button variant="outline" size="sm" fullWidth className="font-bold text-xs border-slate-300 dark:border-slate-700 hover:border-amber-500 hover:text-amber-600">
+                View &amp; Prepare &rarr;
               </Button>
             </Link>
           </div>
 
           {/* Drive 2: Microsoft */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-[#E23636]/40 p-5 shadow-xs flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
+          <div className="group relative bg-white dark:bg-slate-900 rounded-3xl border-2 border-[#E23636] p-6 shadow-lg shadow-red-500/5 hover:shadow-2xl hover:border-red-600 transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="absolute -top-3 left-6 bg-[#E23636] text-white text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md flex items-center gap-1">
+              <Sparkles className="h-3 w-3" />
+              <span>Highest CTC Spotlight</span>
+            </div>
+            <div className="space-y-3.5 pt-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#E23636] bg-red-50 dark:bg-red-950/40 px-2 py-0.5 rounded">
-                  Active Spotlight
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#E23636] bg-red-50 dark:bg-red-950/60 px-2.5 py-1 rounded-full border border-red-200 dark:border-red-800/60">
+                  ⚡ Live Today
                 </span>
-                <span className="text-xs text-slate-500">Live Today</span>
+                <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                  Shortlist Out
+                </span>
               </div>
-              <div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Microsoft India</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Software Development Engineer</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-[#E23636]/10 text-[#E23636] flex items-center justify-center font-black text-sm shrink-0 border border-[#E23636]/20">
+                  MS
+                </div>
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-[#E23636] transition-colors">
+                    Microsoft India
+                  </h3>
+                  <p className="text-xs text-slate-500">Software Development Engineer</p>
+                </div>
               </div>
-              <div className="text-sm font-black text-[#E23636]">
-                ₹44.00 LPA CTC
+              <div className="p-2.5 rounded-xl bg-red-50/60 dark:bg-red-950/30 border border-red-100 dark:border-red-900/40 flex items-center justify-between">
+                <span className="text-xs font-medium text-slate-600 dark:text-slate-400">Package Offer:</span>
+                <span className="text-base font-black text-[#E23636]">
+                  ₹44.00 LPA CTC
+                </span>
               </div>
-              <div className="text-xs text-slate-500">
-                Eligible: CSE, CSM, CSD, AIDS, ECE
+              <div className="text-[11px] text-slate-500 font-medium">
+                🎯 Eligible: CSE, CSM, CSD, AIDS, ECE
               </div>
             </div>
             <Link href="/login" className="w-full">
-              <Button size="sm" fullWidth className="bg-[#E23636] hover:bg-[#c52d2d] text-white font-bold text-xs">
-                Apply Now
+              <Button size="sm" fullWidth className="bg-[#E23636] hover:bg-[#c52d2d] text-white font-bold text-xs shadow-md">
+                Apply Now &rarr;
               </Button>
             </Link>
           </div>
 
           {/* Drive 3: Qualcomm */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
+          <div className="group relative bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm hover:shadow-xl hover:border-blue-500/50 dark:hover:border-blue-500/40 transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2 py-0.5 rounded">
-                  Full Time Role
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-1 rounded-full border border-blue-200 dark:border-blue-800/60">
+                  🚀 Core Tech
                 </span>
-                <span className="text-xs text-slate-500">Due in 8 days</span>
+                <span className="text-[11px] font-bold text-slate-500">8d left</span>
               </div>
-              <div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Qualcomm India</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Embedded Software Engineer</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-black text-sm shrink-0 border border-blue-500/20">
+                  QC
+                </div>
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    Qualcomm India
+                  </h3>
+                  <p className="text-xs text-slate-500">Embedded Software Engineer</p>
+                </div>
               </div>
-              <div className="text-sm font-black text-[#E23636]">
-                ₹18.50 LPA CTC
+              <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                <span className="text-xs font-medium text-slate-500">Package Offer:</span>
+                <span className="text-sm font-black text-[#E23636]">
+                  ₹18.50 LPA CTC
+                </span>
               </div>
-              <div className="text-xs text-slate-500">
-                Eligible: ECE, EEE, CSE (CGPA &ge; 7.0)
+              <div className="text-[11px] text-slate-500 font-medium">
+                🎯 Eligible: ECE, EEE, CSE (CGPA &ge; 7.0)
               </div>
             </div>
             <Link href="/login" className="w-full">
-              <Button variant="outline" size="sm" fullWidth className="font-semibold text-xs">
-                View &amp; Prepare
+              <Button variant="outline" size="sm" fullWidth className="font-bold text-xs border-slate-300 dark:border-slate-700 hover:border-blue-500 hover:text-blue-600">
+                View &amp; Prepare &rarr;
               </Button>
             </Link>
           </div>
 
           {/* Drive 4: Cognizant */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs hover:border-slate-400 dark:hover:border-slate-700 transition-all flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
+          <div className="group relative bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-sm hover:shadow-xl hover:border-purple-500/50 dark:hover:border-purple-500/40 transition-all duration-300 flex flex-col justify-between space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 px-2 py-0.5 rounded">
-                  Mass Hiring Drive
+                <span className="text-[10px] font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800/60">
+                  ⭐ Mass Hiring
                 </span>
-                <span className="text-xs text-slate-500">Due in 12 days</span>
+                <span className="text-[11px] font-bold text-slate-500">12d left</span>
               </div>
-              <div>
-                <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Cognizant Technology</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">GenC Next Digital Specialist</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-black text-sm shrink-0 border border-purple-500/20">
+                  CTS
+                </div>
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    Cognizant Technology
+                  </h3>
+                  <p className="text-xs text-slate-500">GenC Next Digital Specialist</p>
+                </div>
               </div>
-              <div className="text-sm font-black text-[#E23636]">
-                ₹6.75 LPA CTC
+              <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                <span className="text-xs font-medium text-slate-500">Package Offer:</span>
+                <span className="text-sm font-black text-[#E23636]">
+                  ₹6.75 LPA CTC
+                </span>
               </div>
-              <div className="text-xs text-slate-500">
-                Eligible: All 27 B.Tech Sections (CGPA &ge; 6.5)
+              <div className="text-[11px] text-slate-500 font-medium">
+                🎯 Eligible: All 27 B.Tech Sections (CGPA &ge; 6.5)
               </div>
             </div>
             <Link href="/login" className="w-full">
-              <Button variant="outline" size="sm" fullWidth className="font-semibold text-xs">
-                View &amp; Prepare
+              <Button variant="outline" size="sm" fullWidth className="font-bold text-xs border-slate-300 dark:border-slate-700 hover:border-purple-500 hover:text-purple-600">
+                View &amp; Prepare &rarr;
               </Button>
             </Link>
           </div>

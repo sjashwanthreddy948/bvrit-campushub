@@ -134,11 +134,13 @@ export function Sidebar({ role = "student", className, onNavigate, unreadNotific
     >
       {/* Brand: BVRIT & Vishnu Universal Learning */}
       <div className="flex items-center gap-3 px-4 h-20 border-b border-slate-200 dark:border-slate-800 shrink-0 bg-transparent">
-        <img
-          src="/images/bvrit-logo.png"
-          alt="BVRIT Logo"
-          className="h-9 w-auto object-contain shrink-0"
-        />
+        <div className="bg-white dark:bg-white/95 px-2 py-1 rounded-xl border border-slate-200/80 dark:border-white/20 shadow-xs flex items-center shrink-0">
+          <img
+            src="/images/bvrit-logo.png"
+            alt="BVRIT Logo"
+            className="h-8 w-auto object-contain shrink-0"
+          />
+        </div>
         <div className="flex flex-col min-w-0">
           <div className="flex items-center gap-1.5">
             <span className="text-base font-black tracking-tight text-slate-900 dark:text-white leading-none">

@@ -411,32 +411,40 @@ export default function ResumeBuilderPage() {
         </div>
 
         {/* ATS Readiness Gauge */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
-                  ATS Readiness Score: {atsScore}%
-                </h2>
+        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border border-indigo-900/80 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="relative w-16 h-16 rounded-2xl bg-slate-800 border border-indigo-500/40 flex flex-col items-center justify-center shrink-0 shadow-lg">
+                <span className="text-xl font-black text-amber-400">{atsScore}%</span>
+                <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">ATS MATCH</span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                Single-column semantic format optimized for Workday, Taleo, Greenhouse, and Lever recruiters.
-              </p>
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-base sm:text-lg font-black text-white">
+                    {atsScore >= 90 ? "🚀 Exceptional ATS Rank (Top 5%)" : atsScore >= 75 ? "⚡ Strong ATS Compatibility" : "⚠️ Needs ATS Optimization"}
+                  </h2>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                    Workday &amp; Taleo Validated
+                  </span>
+                </div>
+                <p className="text-xs text-indigo-200 mt-1">
+                  Automated keyword alignment for Amazon, Microsoft, and Cognizant candidate tracking parsers.
+                </p>
+              </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-slate-500">Template:</span>
-              <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 p-1">
+              <span className="text-xs font-semibold text-slate-400">Template:</span>
+              <div className="flex items-center rounded-xl border border-slate-700 bg-slate-800/80 p-1">
                 {(["classic", "modern", "compact"] as TemplateType[]).map((t) => (
                   <button
                     key={t}
                     type="button"
                     onClick={() => setTemplate(t)}
-                    className={`text-xs px-3 py-1 rounded-md font-semibold capitalize transition-colors ${
+                    className={`text-xs px-3 py-1.5 rounded-lg font-bold capitalize transition-all ${
                       template === t
-                        ? "bg-blue-600 text-white shadow-2xs font-bold"
-                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        ? "bg-blue-600 text-white shadow-md font-black"
+                        : "text-slate-300 hover:text-white"
                     }`}
                   >
                     {t}
@@ -447,20 +455,20 @@ export default function ResumeBuilderPage() {
           </div>
 
           {/* Checklist items */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 pt-1 border-t border-slate-100 dark:border-slate-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 pt-2 border-t border-indigo-900/60">
             {atsChecklist.slice(0, 4).map((item) => (
               <div
                 key={item.label}
-                className={`p-2.5 rounded-lg border text-xs flex items-center gap-2 ${
+                className={`p-2.5 rounded-xl border text-xs flex items-center gap-2 transition-all ${
                   item.passed
-                    ? "bg-emerald-50/60 border-emerald-200 dark:bg-emerald-950/30 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300"
-                    : "bg-amber-50/60 border-amber-200 dark:bg-amber-950/30 dark:border-amber-900 text-amber-800 dark:text-amber-300"
+                    ? "bg-emerald-950/40 border-emerald-500/30 text-emerald-300"
+                    : "bg-amber-950/40 border-amber-500/30 text-amber-300"
                 }`}
               >
                 {item.passed ? (
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                 ) : (
-                  <AlertCircle className="h-4 w-4 text-amber-600 shrink-0" />
+                  <AlertCircle className="h-4 w-4 text-amber-400 shrink-0" />
                 )}
                 <span className="truncate font-medium">{item.label}</span>
               </div>

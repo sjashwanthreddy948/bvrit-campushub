@@ -24,6 +24,7 @@ import {
   Filter,
   Check,
   Zap,
+  Flame,
 } from "lucide-react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -153,11 +154,25 @@ export default function SkillsPage() {
     loadData();
   }, []);
 
+  // Gamified XP tracking for DSA challenges
+  const [dsaXp, setDsaXp] = React.useState(625);
+  const [lastSolvedNotice, setLastSolvedNotice] = React.useState<string | null>(null);
+
   const handleToggleProblem = (id: string) => {
-    setCompletedProblems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setCompletedProblems((prev) => {
+      const isSolved = !prev[id];
+      if (isSolved) {
+        setDsaXp((curr) => curr + 25);
+        setLastSolvedNotice("+25 XP Earned! ⚡");
+        setTimeout(() => setLastSolvedNotice(null), 2500);
+      } else {
+        setDsaXp((curr) => Math.max(0, curr - 25));
+      }
+      return {
+        ...prev,
+        [id]: isSolved,
+      };
+    });
   };
 
   const handleAddSkill = async (skill: StandardSkill) => {
@@ -310,31 +325,53 @@ export default function SkillsPage() {
         {activeTab === "dsa" && (
           <div className="space-y-6 animate-in fade-in duration-150">
             {/* DSA Progress Card */}
-            <Card className="border-blue-200 dark:border-blue-900/60 bg-gradient-to-r from-blue-50/60 via-indigo-50/40 to-slate-50 dark:from-blue-950/40 dark:via-indigo-950/20 dark:to-slate-900">
-              <CardContent className="p-4 sm:p-6 space-y-3">
+            <Card className="border-indigo-200 dark:border-indigo-900/60 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-xl">
+              <CardContent className="p-4 sm:p-6 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                      <BrainCircuit className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                      DSA Interview Pattern Progress
-                    </h2>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
-                      Mastering the 4 core phases covers 90%+ of technical coding interviews at Amazon, Qualcomm, and top product firms.
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-base sm:text-lg font-black text-white flex items-center gap-2">
+                        <BrainCircuit className="h-5 w-5 text-amber-400" />
+                        DSA Interview Pattern Mastery
+                      </span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 flex items-center gap-1">
+                        <Flame className="h-3 w-3 fill-amber-400 text-amber-400" />
+                        4-Day Streak Active
+                      </span>
+                      {lastSolvedNotice && (
+                        <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-bounce">
+                          {lastSolvedNotice}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-300 mt-1">
+                      Mastering these 25 patterns covers 90%+ of technical rounds at Amazon, Qualcomm, and Microsoft.
                     </p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-black text-blue-600 dark:text-blue-400">
-                      {dsaProgressPct}%
-                    </span>
-                    <span className="text-xs text-slate-500 font-medium">({completedCount} of {totalProblems} targets)</span>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="text-xs text-indigo-200">Practice Score</div>
+                      <div className="text-lg font-black text-amber-400">{dsaXp} XP</div>
+                    </div>
+                    <div className="h-9 w-px bg-indigo-800" />
+                    <div className="text-right">
+                      <div className="text-xs text-indigo-200">Roadmap Progress</div>
+                      <div className="text-2xl font-black text-white">{dsaProgressPct}%</div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
-                  <div
-                    className="bg-blue-600 h-full transition-all duration-300"
-                    style={{ width: `${dsaProgressPct}%` }}
-                  />
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] text-indigo-200 font-medium">
+                    <span>{completedCount} of {totalProblems} questions mastered</span>
+                    <span>{totalProblems - completedCount} patterns remaining</span>
+                  </div>
+                  <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden p-0.5 border border-indigo-900/80">
+                    <div
+                      className="bg-gradient-to-r from-amber-400 to-indigo-500 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${dsaProgressPct}%` }}
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -430,6 +467,13 @@ export default function SkillsPage() {
                                   }`}
                                 >
                                   {prob.difficulty}
+                                </span>
+                                <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${
+                                  isDone
+                                    ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300"
+                                    : "bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300"
+                                }`}>
+                                  {isDone ? "✓ +25 XP" : "+25 XP"}
                                 </span>
                               </div>
                               <span className="text-[11px] text-slate-400 block mt-0.5">
