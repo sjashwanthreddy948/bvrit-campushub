@@ -165,18 +165,24 @@ function InlineMarkdown({ text }: { text: string }) {
   );
 }
 
-// ─── Typing Indicator ─────────────────────────────────────────────────────────
+// ─── Thinking & Reasoning Indicator ──────────────────────────────────────────
 
-function TypingDots() {
+function ThinkingIndicator() {
   return (
-    <div className="flex items-center gap-1.5 py-1">
-      {[0, 1, 2].map((i) => (
-        <div
-          key={i}
-          className="h-2 w-2 rounded-full bg-amber-400/70 animate-bounce"
-          style={{ animationDelay: `${i * 0.15}s` }}
-        />
-      ))}
+    <div className="flex items-center gap-3 py-1 text-xs text-amber-300/90 select-none animate-in fade-in duration-150">
+      <div className="flex items-center gap-1">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="h-2 w-2 rounded-full bg-amber-400 animate-bounce"
+            style={{ animationDelay: `${i * 0.15}s` }}
+          />
+        ))}
+      </div>
+      <div className="flex items-center gap-1.5 font-bold tracking-wide">
+        <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-spin" />
+        <span>Thinking &amp; analyzing question...</span>
+      </div>
     </div>
   );
 }
@@ -507,7 +513,7 @@ export default function CampusHubAIPage() {
               </div>
               <div>
                 <span className="font-bold text-white text-sm">CampusHub AI</span>
-                <span className="text-[10px] text-amber-400/70 ml-2">Powered by Gemini 2.0 Flash</span>
+                <span className="text-[10px] text-amber-400/80 font-semibold ml-2">Powered by Gemini Reasoning Engine</span>
               </div>
             </div>
             <div className="ml-auto flex items-center gap-2">
@@ -600,7 +606,7 @@ export default function CampusHubAIPage() {
                       ) : (
                         <div className="bg-[#1A1D27] border border-slate-700/50 px-5 py-4 rounded-2xl rounded-tl-sm shadow-md">
                           {msg.isStreaming && !msg.text ? (
-                            <TypingDots />
+                            <ThinkingIndicator />
                           ) : (
                             <MarkdownMessage content={msg.text} />
                           )}

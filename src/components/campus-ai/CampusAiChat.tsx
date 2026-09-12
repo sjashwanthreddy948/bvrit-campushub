@@ -441,27 +441,33 @@ export function CampusAiChat({
           </div>
         ))}
 
-        {/* Loading Indicator */}
+        {/* Thinking & Reasoning Indicator */}
         {loading && (
-          <div className="flex items-start gap-2.5 justify-start">
-            <div className="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 animate-pulse">
+          <div className="flex items-start gap-2.5 justify-start animate-in fade-in duration-200">
+            <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shrink-0 shadow-xs">
               <Bot className="h-4 w-4" />
             </div>
-            <div className="bg-slate-100 dark:bg-slate-800 rounded-2xl rounded-bl-xs p-3 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+            <div className="bg-slate-100 dark:bg-slate-800/90 rounded-2xl rounded-bl-xs p-3.5 border border-blue-200/70 dark:border-blue-800/50 flex items-center gap-3 shadow-xs">
               <div className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-blue-600 animate-bounce" />
                 <span
-                  className="w-2 h-2 rounded-full bg-blue-600 animate-bounce"
+                  className="w-2 h-2 rounded-full bg-indigo-600 animate-bounce"
                   style={{ animationDelay: "150ms" }}
                 />
                 <span
-                  className="w-2 h-2 rounded-full bg-blue-600 animate-bounce"
+                  className="w-2 h-2 rounded-full bg-purple-600 animate-bounce"
                   style={{ animationDelay: "300ms" }}
                 />
               </div>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                Searching BVRIT campus intelligence...
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-blue-700 dark:text-blue-300 flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-amber-500 animate-spin" />
+                  Thinking &amp; Reasoning...
+                </span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                  CampusHub AI is formulating an accurate step-by-step answer...
+                </span>
+              </div>
             </div>
           </div>
         )}
