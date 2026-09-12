@@ -274,9 +274,7 @@ export default function RegisterPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md md:max-w-xl">
         <div className="flex justify-center mb-3">
-          <div className="h-12 w-12 rounded-2xl bg-white dark:bg-slate-900 p-1.5 flex items-center justify-center shrink-0 shadow-sm border border-slate-200 dark:border-slate-800">
-            <Image src="/images/bvrit-logo.png" alt="BVRIT Crest" width={40} height={40} className="object-contain" />
-          </div>
+          <Image src="/images/bvrit-logo.png" alt="BVRIT Crest" width={64} height={64} className="object-contain shrink-0" />
         </div>
         <h2 className="text-center text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
           Student Profile Registration

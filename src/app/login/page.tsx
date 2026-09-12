@@ -92,12 +92,10 @@ export default function LoginPage() {
         <div className="lg:col-span-5 relative p-8 sm:p-10 flex flex-col justify-between bg-slate-900 text-white overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
           <div className="space-y-6 relative z-10">
             <div className="flex items-center gap-3">
-              <div className="h-11 w-11 rounded-xl bg-white p-1 flex items-center justify-center shrink-0 shadow-sm">
-                <Image src="/images/bvrit-logo.png" alt="BVRIT Crest" width={36} height={36} className="object-contain" />
-              </div>
+              <Image src="/images/bvrit-logo.png" alt="BVRIT Crest" width={48} height={48} className="object-contain shrink-0" />
               <div>
                 <span className="font-extrabold text-white text-base tracking-tight block">BVRIT Narsapur</span>
-                <span className="text-xs text-amber-400 font-semibold">Autonomous • NAAC &apos;A+&apos; Grade</span>
+                <span className="text-xs text-blue-400 font-semibold">Autonomous • NAAC &apos;A+&apos; Grade</span>
               </div>
             </div>
 

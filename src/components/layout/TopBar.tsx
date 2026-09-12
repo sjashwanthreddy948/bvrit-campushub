@@ -36,13 +36,13 @@ export function TopBar({
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 sm:h-16 w-full items-center justify-between border-b border-slate-200/80 dark:border-white/10 liquid-glass px-3 sm:px-6">
+    <header className="sticky top-0 z-30 flex h-14 sm:h-16 w-full items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#0B0F17]/95 backdrop-blur-md px-3 sm:px-6">
       {/* Left: Mobile menu toggle & brand */}
       <div className="flex items-center gap-2.5 sm:gap-4">
         <button
           type="button"
           onClick={onOpenMobileMenu}
-          className="md:hidden flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-slate-700 dark:text-slate-300 hover:bg-amber-50 dark:hover:bg-slate-800 focus:outline-none"
+          className="md:hidden flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none"
           aria-label="Open navigation menu"
         >
           <Menu className="h-5 w-5" />
@@ -50,31 +50,29 @@ export function TopBar({
 
         <Link
           href={getHomeRoute()}
-          className="flex items-center gap-2.5 font-bold text-slate-900 dark:text-white group"
+          className="flex items-center gap-3 font-bold text-slate-900 dark:text-white group"
         >
-          <div className="h-8 w-8 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-0.5 flex items-center justify-center shrink-0 shadow-2xs">
-            <img
-              src="/images/bvrit-logo.png"
-              alt="BVRIT Logo"
-              className="w-full h-full object-contain"
-            />
-          </div>
+          <img
+            src="/images/bvrit-logo.png"
+            alt="BVRIT Logo"
+            className="h-8 sm:h-9 w-auto object-contain shrink-0"
+          />
           <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="text-base font-black tracking-tight leading-none text-slate-950 dark:text-white">
-                BVRIT <span className="text-[#F59E0B]">CampusHub</span>
+            <div className="flex items-center gap-2">
+              <span className="text-base sm:text-lg font-black tracking-tight leading-none text-slate-900 dark:text-white">
+                BVRIT <span className="text-blue-600 dark:text-blue-400">CampusHub</span>
               </span>
-              <span className="hidden sm:inline-block text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+              <span className="hidden sm:inline-block text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-950/70 dark:text-blue-300 border border-blue-200/70 dark:border-blue-800/70">
                 Autonomous
               </span>
             </div>
-            <span className="text-[9px] font-medium text-slate-400 dark:text-slate-500 hidden md:inline-block">
+            <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 hidden md:inline-block mt-0.5">
               Sri Vishnu Educational Society &bull; Narsapur
             </span>
           </div>
 
           {role !== "student" && (
-            <span className="text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+            <span className="text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-300 dark:border-blue-700">
               {role === "coordinator" ? "TPO" : role}
             </span>
           )}
@@ -86,7 +84,7 @@ export function TopBar({
         {/* Search quick link */}
         <Link
           href="/search"
-          className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-slate-600 dark:text-slate-300 hover:bg-amber-50 dark:hover:bg-slate-800 hover:text-amber-700 dark:hover:text-amber-400 transition-colors"
+          className="flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           aria-label="Search"
         >
           <Search className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -95,14 +93,14 @@ export function TopBar({
         {/* Notifications */}
         <Link
           href="/notifications"
-          className="relative flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-slate-600 dark:text-slate-300 hover:bg-amber-50 dark:hover:bg-slate-800 hover:text-amber-700 dark:hover:text-amber-400 transition-colors"
+          className="relative flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           aria-label="Notifications"
         >
           <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
           {unreadNotifications > 0 && (
             <span className="absolute top-2 right-2 flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F59E0B] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F59E0B]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-600 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
             </span>
           )}
         </Link>
@@ -113,9 +111,9 @@ export function TopBar({
         {/* User avatar / profile button */}
         <Link
           href="/profile"
-          className="flex items-center gap-2 pl-1 sm:pl-2 rounded-xl hover:bg-amber-50 dark:hover:bg-slate-800 p-1.5 transition-colors"
+          className="flex items-center gap-2 pl-1 sm:pl-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 p-1.5 transition-colors"
         >
-          <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 flex items-center justify-center font-black text-xs border border-amber-300 dark:border-amber-700">
+          <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 flex items-center justify-center font-black text-xs border border-blue-200 dark:border-blue-800">
             {userName ? userName.charAt(0).toUpperCase() : "U"}
           </div>
           <span className="text-xs font-bold text-slate-900 dark:text-slate-200 hidden lg:inline-block max-w-[120px] truncate">

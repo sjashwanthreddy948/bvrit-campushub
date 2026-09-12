@@ -153,27 +153,25 @@ export function Sidebar({ role = "student", className, onNavigate, unreadNotific
       )}
     >
       {/* Brand: BVRIT & Vishnu Universal Learning */}
-      <div className="flex items-center gap-3 px-4 h-20 border-b border-slate-200 dark:border-slate-800 shrink-0 bg-slate-50/50 dark:bg-slate-900/40">
-        <div className="h-12 w-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-1 flex items-center justify-center shrink-0 shadow-xs overflow-hidden">
-          <img
-            src="/images/bvrit-logo.png"
-            alt="BVRIT & Vishnu Universal Learning Logo"
-            className="w-full h-full object-contain"
-          />
-        </div>
+      <div className="flex items-center gap-3 px-4 h-20 border-b border-slate-200 dark:border-slate-800 shrink-0 bg-transparent">
+        <img
+          src="/images/bvrit-logo.png"
+          alt="BVRIT Logo"
+          className="h-9 w-auto object-contain shrink-0"
+        />
         <div className="flex flex-col min-w-0">
           <div className="flex items-center gap-1.5">
             <span className="text-base font-black tracking-tight text-slate-900 dark:text-white leading-none">
               BVRIT
             </span>
-            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-[#F59E0B] text-slate-950">
+            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
               CAMPUS
             </span>
           </div>
           <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 truncate mt-0.5">
-            Vishnu Universal Learning
+            Sri Vishnu Educational Society
           </span>
-          <span className="text-[9px] font-bold text-[#0D9488] dark:text-[#2DD4BF] uppercase tracking-wider">
+          <span className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
             {role} Portal
           </span>
         </div>
